@@ -22,7 +22,7 @@
 
 ## Documentation Repositories
 
-The documentation is actually stored in two seperate repositorys:
+The documentation is actually stored in two seperate repositories:
 
 - [bevry/documentation](https://github.com/bevry/documentation) for general documentation for miscelanous bevry projects and whatever
 - [docpad/documentation](https://github.com/docpad/documentation) for docpad specific documentation
