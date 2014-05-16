@@ -1,4 +1,4 @@
-# [Bevry's Learning Centre Website](http://learn.bevry.me), built with [DocPad](http://docpad.org)
+# [Bevry's Learning Centre Website](http://learn.bevry.me)
 
 
 ## Getting Started
