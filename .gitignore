@@ -16,5 +16,5 @@ node_modules
 env.coffee
 .env
 
-site/out
-site/src/documents/learn/
+out
+src/documents/learn/

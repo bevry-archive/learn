@@ -18,15 +18,16 @@ section '.reference', ->
 		projects = uniq learnCollection.pluck('project')
 		for project in projects
 			projectPagesByCategory = getProjectPagesByCategory(project)
+			projectCategories = Object.keys(projectPagesByCategory)
 
 			# Project
 			li "##{project}.project.subblock", ->
 				h2 -> getProjectName(project)
 
 				# Categories
-				columns = if categoriesInProject.length > 4 then 4 else categoriesInProject.length
+				columns = if projectCategories.length > 4 then 4 else projectCategories.length
 				nav ".categories.columns-#{columns}", ->
-					for own projectCategory, pagesInProjectCategory of categoriesInProject
+					for own projectCategory, pagesInProjectCategory of projectPagesByCategory
 
 						# Category
 						li "##{project}-#{projectCategory}.category", ->

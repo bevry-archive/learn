@@ -40,7 +40,6 @@
     "extendr": "~2.1.0",
     "moment": "~2.4.0",
     "request": "~2.27.0",
-    "requirefresh": "~1.1.2",
     "uniq": "^1.0.0"
   },
   "devDependencies": {

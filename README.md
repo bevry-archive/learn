@@ -1,4 +1,4 @@
-# [Bevry's Website](http://bevry.me), built with [DocPad](http://docpad.org)
+# [Bevry's Learning Centre Website](http://learn.bevry.me), built with [DocPad](http://docpad.org)
 
 
 ## Getting Started
@@ -8,8 +8,8 @@
 1. Clone and run the server
 
 	``` bash
-	git clone git://github.com/bevry/bevry-website.git
-	cd bevry-website
+	git clone git://github.com/bevry/learn.git
+	cd learn
 	npm install
 	docpad run
 	```
