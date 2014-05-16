@@ -20,7 +20,7 @@ nav ".list-#{type}"+(if cssClasses then "."+cssClasses.join('.') else ''), "type
 	# Exists
 	items.forEach (item) ->
 		# Item
-		{url,title,date,description,contentRenderedWithoutLayouts} = item.attributes
+		{url,title,date,description,contentRenderedWithoutLayouts} = (item.attributes or item)
 
 		# CssClasses
 		_itemCssClasses = ["list-#{type}-item"]
@@ -44,5 +44,5 @@ nav ".list-#{type}"+(if cssClasses then "."+cssClasses.join('.') else ''), "type
 				div ".list-#{type}-description", property:"dc:description", -> description
 
 			# Display the content if it exists
-			if showContent and item.contentRenderedWithoutLayouts
+			if showContent and contentRenderedWithoutLayouts
 				div ".list-#{type}-content", property:"dc:content", -> contentRenderedWithoutLayouts

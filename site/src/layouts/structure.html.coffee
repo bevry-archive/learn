@@ -2,6 +2,8 @@
 layout: default
 ###
 
+{getProjectsMapping, getProjectPagesByCategory} = @
+
 div '.container', ->
 	header '.topbar', ->
 		h1 '.heading.hover-link', 'data-href':'/', ->
@@ -9,32 +11,44 @@ div '.container', ->
 		h2 '.subheading', @text['subheading']
 
 	div '.sidebar', ->
-		pages = @getCollection('pages')
-		activeItemURL = '/'+@document.url.split('/')[1]
-		activeItem = if activeItemURL isnt '/' then pages.findOne(url: $startsWith: activeItemURL) else pages.findOne(url:activeItemURL)
-		text @partial('list/menu.html.coffee',{
-			classname: "navbar"
-			items: pages
-			activeItem: activeItem
-			partial: @partial
-			moment: @moment
-		})
+		if @document.project
+			form submit:'/project', method:'query', ->
+				select name:'project', ->
+					for own projectKey, projectName of getProjectsMapping()
+						option value:projectKey, -> projectName
+				input '.no-js', {type:'submit', value:'Open Project'}, ->
 
-		nav ".promos", ->
-			for own key,promo of @promos
-				a ".promo.hover-link", "href":promo.url, ->
-					span ".title", -> promo.title
-					span ".description", ->
-						if promo.description
-							text promo.description
-						else
-							if promo.date
-								if new Date(promo.date) < new Date()
-									text "Happened on #{promo.date} "
-								else
-									text "Happening on #{promo.date} "
-							if promo.location
-								text "in #{promo.location}"
+			for own projectCategory, projectPagesInCategory of getProjectPagesByCategory()
+				activeItemURL = '/'+@document.url.split('/')[1]
+				activeItem = if activeItemURL isnt '/' then projectPagesInCategory.findOne(url: $startsWith: activeItemURL) else projectPagesInCategory.findOne(url:activeItemURL)
+				text @partial('list/menu.html.coffee', {
+					classname: "navbar"
+					items: projectPagesInCategory
+					activeItem: activeItem
+					partial: @partial
+					moment: @moment
+				})
+
+		else
+			welcomePage = {
+				id: '/'
+				url: '/'
+				title: 'Welcome'
+			}
+			projectPages = [welcomePage]
+			for projectKey, projectName of getProjectsMapping()
+				projectPages.push({
+					id: projectKey
+					url: '#'+projectKey
+					title: projectName
+				})
+			text @partial('list/menu.html.coffee', {
+				classname: "navbar"
+				items: projectPages
+				activeItem: welcomePage
+				partial: @partial
+				moment: @moment
+			})
 
 	div '.mainbar', ->
 		div "#content", -> @content

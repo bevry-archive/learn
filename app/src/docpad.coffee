@@ -2,20 +2,16 @@
 fsUtil = require('fs')
 pathUtil = require('path')
 moment = require('moment')
+uniq = require('uniq')
 {requireFresh} = require('requirefresh')
 
 # Prepare
 rootPath = pathUtil.resolve(__dirname+'/../..')
 appPath = __dirname
 sitePath = rootPath+'/site'
-templateData = requireFresh(appPath+'/templateData')
-textData = templateData.text
 websiteVersion = requireFresh(rootPath+'/package.json').version
-contributorsGetter = null
-contributors = null
-pin = null
 isProduction = process.env.NODE_ENV is 'production'
-
+projectsMapping = {}
 
 # =================================
 # Helpers
@@ -74,12 +70,12 @@ docpadConfig =
 	# These are variables that will be accessible via our templates
 	# To access one of these within our templates, refer to the FAQ: https://github.com/bevry/docpad/wiki/FAQ
 
-	templateData: require('extendr').extend templateData,
+	templateData:
 
 		# -----------------------------
 		# Misc
 
-		uniq: require('uniq')
+		uniq: uniq
 		moment: moment
 		nodeVersion: process.version
 		nodeMajorMinorVersion: process.version.replace(/^v/,'').split('.')[0...2].join('.')
@@ -93,22 +89,15 @@ docpadConfig =
 			url: "http://bevry.me"
 
 			# The default title of our website
-			title: "Bevry - Node.js, Backbone.js & JavaScript Consultancy in Sydney, Australia"
-
-			# The website description (for SEO)
-			description: """
-				We're a Node.js, Backbone.js and JavaScript consultancy in Sydney Australia with a focus on empowering developers. We've created History.js one of the most popular javascript projects in the world, and DocPad an amazing Node.js Content Management System. We’re also working on setting up several Startup Hostels all over the world, enabling entreprenuers to travel, collaborate, and live their dream lifestyles cheaper than back home.
-				"""
+			title: "Bevry's Learning Centre"
 
 			# The website keywords (for SEO) separated by commas
 			keywords: """
-				bevry, bevryme, balupton, benjamin lupton, docpad, history.js, node, node.js, javascript, coffeescript, startup hostel, query engine, queryengine, backbone.js, cson
+				bevry, bevryme, balupton, benjamin lupton, docpad, history.js, node, node.js, javascript, coffeescript, startup hostel, query engine, backbone.js, cson
 				"""
 
 			# Services
 			services:
-				pin: process.env.BEVRY_PIN_API_KEY_PUBLIC
-
 				gittipButton: 'bevry'
 				flattrButton: '344188/balupton-on-Flattr'
 				paypalButton: 'QB8GQPZAH84N6'
@@ -126,9 +115,6 @@ docpadConfig =
 
 			# Scripts
 			scripts: [
-				# External
-				(if isProduction then "https://api.pin.net.au/pin.js" else "https://test-api.pin.net.au/pin.js")
-
 				# Vendor
 				"/vendor/jquery.js"
 				"/vendor/log.js"
@@ -138,7 +124,6 @@ docpadConfig =
 				"/vendor/historyjsit.js"
 
 				# Scripts
-				"/scripts/payment.js"
 				"/scripts/bevry.js"
 				"/scripts/script.js"
 			].map (url) -> "#{url}?websiteVersion=#{websiteVersion}"
@@ -153,6 +138,16 @@ docpadConfig =
 		getCategoryName: getCategoryName
 		getLinkName: getLinkName
 		getLabelName: getLabelName
+		getProjectsMapping: -> projectsMapping
+		getProjectPagesByCategory: (project) ->
+			learnCollection = @getCollection('learn')
+			project ?= @document.project
+			pagesInProject = learnCollection.findAll({'project':project}, [categoryDirectory:1])
+			categoriesInProject = uniq pagesInProject.pluck('category')
+			projectPagesByCategory = {}
+			for projectCategory in categoriesInProject
+				projectPagesByCategory[projectCategory] = pagesInProject.findAll({'category':projectCategory}, [filename:1])
+			return projectPagesByCategory
 
 		# Get the prepared site/document title
 		# Often we would like to specify particular formatting to our page's title
@@ -189,9 +184,6 @@ docpadConfig =
 			language ?= pathUtil.extname(relativePath).substr(1)
 			contents = @readFile(relativePath)
 			return """<pre><code class="#{language}">#{contents}</code></pre>"""
-
-		# Get Contributors
-		getContributors: -> contributors or []
 
 
 	# =================================
@@ -247,6 +239,7 @@ docpadConfig =
 
 					project = projectDirectory.replace(/[\-0-9]+/, '')
 					projectName = getProjectName(project)
+					projectsMapping[project] = [projectName]
 
 					category = categoryDirectory.replace(/^[\-0-9]+/, '')
 					categoryName = getCategoryName(category)
@@ -363,53 +356,11 @@ docpadConfig =
 
 	events:
 
-		# Generate Before
-		generateBefore: (opts) ->
-			# Reset contributors if we are a complete generation (not a partial one)
-			contributors = null
-
-			# Return
-			return true
-
-		# Fetch Contributors
-		renderBefore: (opts,next) ->
-			# Prepare
-			docpad = @docpad
-
-			# Check
-			return next()  if contributors
-
-			# Log
-			docpad.log('info', 'Fetching your latest contributors for display within the website')
-
-			# Prepare contributors getter
-			contributorsGetter ?= require('getcontributors').create(
-				#log: docpad.log
-				github_client_id: process.env.BEVRY_GITHUB_CLIENT_ID
-				github_client_secret: process.env.BEVRY_GITHUB_CLIENT_SECRET
-			)
-
-			# Fetch contributors
-			users = ['bevry', 'docpad', 'webwrite', 'browserstate']
-			contributorsGetter.fetchContributorsFromUsers users, (err,_contributors=[]) ->
-				# Check
-				return next(err)  if err
-
-				# Apply
-				contributors = _contributors
-				docpad.log('info', "Fetched your latest contributors for display within the website, all #{_contributors.length} of them")
-
-				# Complete
-				return next()
-
-			# Return
-			return true
-
 		# Server Extend
 		# Used to add our own custom routes to the server before the docpad routes are added
 		serverExtend: (opts) ->
 			# Extract the server from the options
-			{server,express} = opts
+			{server, express} = opts
 			docpad = @docpad
 			request = require('request')
 			codeSuccess = 200
@@ -454,51 +405,6 @@ docpadConfig =
 			# DocPad General
 			server.get /^\/docpad(?:\/(.*))?$/, (req,res) ->
 				res.redirect(codeRedirectPermanent, "http://docpad.org/#{req.params[0] or ''}")
-
-			# Projects
-			server.get /^\/(?:g|gh|github|project)(?:\/(.*))?$/, (req,res) ->
-				res.redirect(codeRedirectPermanent, "https://github.com/bevry/#{req.params[0] or ''}")
-
-			# Twitter
-			server.get /^\/(?:t|twitter|tweet)(?:\/(.*))?$/, (req,res) ->
-				res.redirect(codeRedirectPermanent, "https://twitter.com/bevryme")
-
-			# Facebook
-			server.get /^\/(?:f|facebook)(?:\/(.*))?$/, (req,res) ->
-				res.redirect(codeRedirectPermanent, "https://www.facebook.com/bevryme")
-
-			# Payment
-			server.all '/payment-form', (req,res) ->
-				pin ?= require('pinjs').setup({
-					key: process.env.BEVRY_PIN_API_KEY_PRIVATE,
-					production: isProduction
-				})
-				req.body.amount *= 100   # convert cents to dollars
-				req.body.amount += 30    # add 30c transaction fee
-				req.body.amount *= 1.04  # add 3% transaction fee with 1% leeway
-				pin.createCharge req.body, (pinResponse) ->
-					console.log(pinResponse.body)
-					res.send(pinResponse.statusCode, pinResponse.body)
-					#res.redirect(req.headers.referer)
-
-			# Common Redirects
-			redirects =
-					'/interconnect': '/project/interconnect'
-					'/payment': '/about#payments'
-					'/goopen': 'https://github.com/bevry/goopen'
-					'/gittip': 'https://www.gittip.com/bevry/'
-					'/flattr': 'http://flattr.com/thing/344188/balupton-on-Flattr'
-					'/premium-support': '/support'
-					'/docs/installnode': '/learn/node-install'
-					'/node/install': '/learn/node-install'
-					'/talks/handsonnode': 'http://node.eventbrite.com/'
-					'/node.zip': 'https://www.dropbox.com/s/masz4vl1b4btwfw/hands-on-node-examples.zip'
-			server.use (req,res,next) ->
-				target = redirects[req.url]
-				if target
-					res.redirect(codeRedirectPermanent, target)
-				else
-					next()
 
 			# Done
 			return

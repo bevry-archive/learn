@@ -1,9 +1,9 @@
 {
-  "name": "bevry-wesite",
+  "name": "bevry-learn",
   "version": "0.1.10",
   "private": true,
   "description": "The Bevry Website",
-  "homepage": "https://github.com/bevry/bevry-website",
+  "homepage": "https://github.com/bevry/learn",
   "author": "Bevry Pty Ltd <us@bevry.me> (http://bevry.me)",
   "maintainers": [
     "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
@@ -12,42 +12,39 @@
     "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
   ],
   "bugs": {
-    "url": "https://github.com/bevry/bevry-website/issues"
+    "url": "https://github.com/bevry/learn/issues"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/bevry/bevry-website.git"
+    "url": "http://github.com/bevry/learn.git"
   },
   "engines": {
     "node": "0.10",
     "npm": "1.3"
   },
   "dependencies": {
-    "docpad": "~6.63.3",
-    "docpad-plugin-coffeekup": "~2.2.0",
-    "docpad-plugin-coffeescript": "~2.2.3",
-    "docpad-plugin-eco": "~2.0.3",
-    "docpad-plugin-highlightjs": "~2.2.0",
-    "docpad-plugin-repocloner": "~2.2.1",
-    "docpad-plugin-robotskirt": "~2.0.3",
-    "docpad-plugin-partials": "~2.8.1",
-    "docpad-plugin-services": "~2.5.0",
-    "docpad-plugin-stylus": "~2.5.0",
-    "docpad-plugin-text": "~2.3.2",
-    "getcontributors": "~1.3.1",
+    "docpad": "^6.64.3",
+    "docpad-plugin-cleancss": "^2.0.2",
+    "docpad-plugin-coffeekup": "^2.2.0",
+    "docpad-plugin-coffeescript": "^2.4.0",
+    "docpad-plugin-eco": "^2.0.3",
+    "docpad-plugin-highlightjs": "^2.2.1",
+    "docpad-plugin-htmlmin": "^2.4.0",
+    "docpad-plugin-partials": "^2.9.0",
+    "docpad-plugin-repocloner": "^2.2.1",
+    "docpad-plugin-robotskirt": "^2.0.3",
+    "docpad-plugin-services": "^2.5.0",
+    "docpad-plugin-stylus": "^2.6.0",
+    "docpad-plugin-text": "^2.3.2",
+    "docpad-plugin-uglify": "^2.4.0",
     "extendr": "~2.1.0",
     "moment": "~2.4.0",
     "request": "~2.27.0",
     "requirefresh": "~1.1.2",
-    "pinjs": "~1.0.0",
-    "uniq": "0.0.2"
+    "uniq": "^1.0.0"
   },
   "devDependencies": {
-    "passport": "~0.1.16",
-    "passport-github": "~0.1.3",
-    "mongodb": "~1.3.18",
-    "coffee-script": "~1.6.2",
-    "docpad-plugin-livereload": "~2.5.6"
+    "docpad-plugin-livereload": "^2.6.0"
   },
   "subdomain": "bevry",
   "main": "node_modules/docpad/bin/docpad-server",

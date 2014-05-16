@@ -1,7 +1,5 @@
 ###
-title: Learning
 layout: page
-url: '/learn/'
 standalone: true
 ###
 
@@ -10,7 +8,7 @@ uniq = @uniq
 docs = @docs
 learnCollection = @getCollection('learn')
 return  unless learnCollection
-{getLabelName,getProjectName,getCategoryName} = @
+{getLabelName, getProjectName, getCategoryName, getProjectPagesByCategory} = @
 
 # Prepare
 section '.reference', ->
@@ -18,9 +16,8 @@ section '.reference', ->
 	# Projects
 	nav ".projects", ->
 		projects = uniq learnCollection.pluck('project')
-		for project in  uniq learnCollection.pluck('project')
-			pagesInProject = learnCollection.findAll({'project':project},{categoryDirectory:1})
-			categoriesInProject = uniq pagesInProject.pluck('category')
+		for project in projects
+			projectPagesByCategory = getProjectPagesByCategory(project)
 
 			# Project
 			li "##{project}.project.subblock", ->
@@ -29,8 +26,7 @@ section '.reference', ->
 				# Categories
 				columns = if categoriesInProject.length > 4 then 4 else categoriesInProject.length
 				nav ".categories.columns-#{columns}", ->
-					for projectCategory in categoriesInProject
-						pagesInProjectCategory = pagesInProject.findAll({'category':projectCategory},[filename:1])
+					for own projectCategory, pagesInProjectCategory of categoriesInProject
 
 						# Category
 						li "##{project}-#{projectCategory}.category", ->
