@@ -22,7 +22,6 @@ textData =
 		"""
 
 	linkNames:
-		main: "Website"
 		learn: "Learn"
 		email: "Email"
 		twitter: "Twitter"
@@ -31,7 +30,6 @@ textData =
 		showcase: "Showcase"
 
 	projectNames:
-		bevry: "Community"
 		docpad: "DocPad"
 		node: "Node.js"
 		queryengine: "Query Engine"
@@ -141,14 +139,14 @@ docpadConfig =
 
 		site:
 			# The production url of our website
-			url: "http://bevry.me"
+			url: "http://learn.bevry.me"
 
 			# The default title of our website
 			title: "Bevry's Learning Centre"
 
 			# The website keywords (for SEO) separated by commas
 			keywords: """
-				bevry, bevryme, balupton, benjamin lupton, docpad, history.js, node, node.js, javascript, coffeescript, startup hostel, query engine, backbone.js, cson
+				bevry, bevryme, balupton, benjamin lupton, docpad, history.js, node.js, javascript, coffee-script, query-engine
 				"""
 
 			# Services
