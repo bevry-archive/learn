@@ -13,11 +13,16 @@ div '.container', ->
 		h2 '.subheading', @text['subheading']
 
 	nav '.sidebar', ->
-		form submit:'/project', method:'query', ->
-			select name:'project', ->
+		form '#project-select-form', action:'/project', method:'GET', ->
+			select '#project-select', name:'project', ->
 				for project in ['home'].concat(projects)
 					option value:project, -> getProjectName(project)
 			input '.no-js', {type:'submit', value:'Open Project'}, ->
+			script -> """
+				document.getElementById('project-select').addEventListener('change', function(){
+					document.getElementById('project-select-form').submit()
+				})
+				"""
 
 		if @document.project
 			learnCollection = @getCollection('learn')

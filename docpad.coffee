@@ -309,6 +309,7 @@ docpadConfig =
 					categoryLink = "/##{project}"  # "/##{project}-#{category}"
 					urls = [
 						"/#{project}/#{name}"
+						"/#{project}/#{category}/#{name}"
 					]
 
 					githubEditUrl = "https://github.com/#{organisationDirectory}/documentation/edit/master/"
@@ -455,6 +456,16 @@ docpadConfig =
 					res.send(codeSuccess, 'regenerated')
 				else
 					res.send(codeBadRequest, 'key is incorrect')
+
+			# Project Select
+			server.all /^\/project(?:\/(.*))?$/, (req,res) ->
+				project = req.query.project or req.body.project or req.params[0]
+				res.redirect(codeRedirectPermanent, "/##{project}")
+
+			server.use (req,res,next) ->
+				project = req.url.replace(/^\/|\/$/g, '')
+				res.redirect(codeRedirectPermanent, "/##{project}")  if projects[project]?
+				next()
 
 			# DocPad Documentation
 			server.get /^\/learn\/docpad\-(.*)$/, (req,res) ->
