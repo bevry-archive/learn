@@ -11,10 +11,10 @@ return  unless learnCollection
 {getLabelName, getProjectName, getCategoryName, getProjectPagesByCategory} = @
 
 # Prepare
-section '.reference', ->
+nav '.reference', ->
 
 	# Projects
-	nav ".projects", ->
+	ul ".projects", ->
 		projects = uniq learnCollection.pluck('project')
 		for project in projects
 			projectPagesByCategory = getProjectPagesByCategory(project)
@@ -26,7 +26,7 @@ section '.reference', ->
 
 				# Categories
 				columns = if projectCategories.length > 4 then 4 else projectCategories.length
-				nav ".categories.columns-#{columns}", ->
+				ul ".categories.columns-#{columns}", ->
 					for own projectCategory, pagesInProjectCategory of projectPagesByCategory
 
 						# Category
@@ -34,7 +34,7 @@ section '.reference', ->
 							h3 -> getCategoryName(projectCategory)
 
 							# Pages
-							nav ".pages", ->
+							ul ".pages", ->
 								pagesInProjectCategory.forEach (page) ->
 
 									# Page

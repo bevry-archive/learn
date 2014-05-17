@@ -8,7 +8,7 @@ uniq = require('uniq')
 appPath = __dirname
 websiteVersion = require('./package.json').version
 isProduction = process.env.NODE_ENV is 'production'
-projectsMapping = {}
+projects = {}
 textData =
 	heading: "Bevry's Learning Centre"
 	subheading: " &nbsp; doing everything we can to empower developers"
@@ -31,6 +31,7 @@ textData =
 		showcase: "Showcase"
 
 	projectNames:
+		bevry: "Community"
 		docpad: "DocPad"
 		node: "Node.js"
 		queryengine: "Query Engine"
@@ -38,7 +39,7 @@ textData =
 	categoryNames:
 		docs: "Documentation"
 		start: "Getting Started"
-		community: "Community"
+		community: "Guidelines"
 		core: "Core"
 		extend: "Extend"
 		handsonnode: "Hands on with Node"
@@ -192,7 +193,7 @@ docpadConfig =
 		getCategoryName: getCategoryName
 		getLinkName: getLinkName
 		getLabelName: getLabelName
-		getProjectsMapping: -> projectsMapping
+		getProjects: -> Object.keys(projects)
 		getProjectPagesByCategory: (project) ->
 			learnCollection = @getCollection('learn')
 			project ?= @document.project
@@ -293,7 +294,7 @@ docpadConfig =
 
 					project = projectDirectory.replace(/[\-0-9]+/, '')
 					projectName = getProjectName(project)
-					projectsMapping[project] = projectName
+					projects[project] = projectName
 
 					category = categoryDirectory.replace(/^[\-0-9]+/, '')
 					categoryName = getCategoryName(category)
@@ -377,19 +378,6 @@ docpadConfig =
 			aliases:
 				stylus: 'css'
 
-		repocloner:
-			repos: [
-				{
-					name: 'Bevry Documentation'
-					path: 'src/documents/learn/bevry'
-					url: 'https://github.com/bevry/documentation.git'
-				}
-				{
-					name: 'DocPad Documentation'
-					path: 'src/documents/learn/docpad/docpad'
-					url: 'https://github.com/docpad/documentation.git'
-				}
-			]
 
 
 	# =================================

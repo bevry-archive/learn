@@ -1,8 +1,9 @@
-text @partial('list/items.html.coffee',{
-	type: 'menu'
+text @partial('list/items.html.coffee', false, {
+	type: @type ? 'menu'
 	items: @items
 	activeItem: @activeItem
-	showDescription: false
-	showDate: false
+	showDescription: @showDescription ? false
+	showDate: @showDate ? false
+	showContent: @showContent ? false
 	moment: @moment
 })

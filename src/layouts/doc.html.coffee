@@ -11,7 +11,7 @@ nextModel = learnCollection.models[index+1] ? null
 prevModel = null  if prevModel and prevModel.attributes.project isnt @document.project
 nextModel = null  if nextModel and nextModel.attributes.project isnt @document.project
 
-text @partial('content/block.html.coffee',{
+text @partial('content/block.html.coffee', false, {
 	cssClasses: ["doc"].concat(@document.cssClasses or [])
 	permalink: @document.url
 	heading: @document.title

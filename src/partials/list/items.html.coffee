@@ -10,7 +10,7 @@ emptyText or= "empty"
 dateFormat or= "YYYY-MM-DD"
 
 # Document List
-nav ".list-#{type}"+(if cssClasses then "."+cssClasses.join('.') else ''), "typeof":"dc:collection", ->
+ul ".list-#{type}"+(if cssClasses then "."+cssClasses.join('.') else ''), "typeof":"dc:collection", ->
 	# Empty
 	unless items.length
 		div ".list-#{type}-empty", ->
@@ -24,13 +24,13 @@ nav ".list-#{type}"+(if cssClasses then "."+cssClasses.join('.') else ''), "type
 
 		# CssClasses
 		_itemCssClasses = ["list-#{type}-item"]
-		_itemCssClasses.push(if item.id is activeItem?.id then activeCssClasses else inactiveCssClasses)
+		_itemCssClasses.push(if url is activeItem?.url then activeCssClasses else inactiveCssClasses)
 		_itemCssClasses.concat(itemCssClasses)
 
 		# Display
 		li "."+_itemCssClasses.join('.'), "typeof":"soic:page", about:url, ->
-			# Link
-			a ".list-#{type}-link", href:url, ->
+			# Title Content
+			getTitleContent = ->
 				# Title
 				span ".list-#{type}-title", property:"dc:title", -> title
 
@@ -38,6 +38,12 @@ nav ".list-#{type}"+(if cssClasses then "."+cssClasses.join('.') else ''), "type
 				if showDate and moment
 					span ".list-#{type}-date", property:"dc:date", ->
 						moment(date).format(dateFormat)
+
+			# Link
+			if url
+				a ".list-#{type}-link", href:url, getTitleContent
+			else
+				getTitleContent.call(this)
 
 			# Display the description if it exists
 			if showDescription and description

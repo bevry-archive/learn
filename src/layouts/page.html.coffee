@@ -2,7 +2,7 @@
 layout: structure
 ###
 
-text @partial('content/block.html.coffee',{
+text @partial('content/block.html.coffee', false, {
 	cssClasses: ['page'].concat(@document.cssClasses or []).concat(@cssClasses or [])
 	permalink: @document.url
 	heading: @document.title

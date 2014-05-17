@@ -8,7 +8,7 @@ itemsInNextPage=  items.createChildCollection().setPaging({limit,page+1}).query(
 # Page navigation item
 nav '.paging-pages', ->
 	# Display the list of items on the current page
-	text @partial('list/items.html.coffee',{items},true)
+	text @partial('list/items.html.coffee', false, {items}, true)
 
 	# Display the previous and next page links
 	if page > 1

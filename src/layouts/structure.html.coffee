@@ -2,7 +2,8 @@
 layout: default
 ###
 
-{getProjectsMapping, getProjectPagesByCategory} = @
+{getProjectName, getCategoryName, getProjectPagesByCategory} = @
+projects = @getProjects()
 
 div '.container', ->
 	header '.topbar', ->
@@ -10,44 +11,70 @@ div '.container', ->
 			@text['heading']
 		h2 '.subheading', @text['subheading']
 
-	div '.sidebar', ->
+	nav '.sidebar', ->
+		form submit:'/project', method:'query', ->
+			select name:'project', ->
+				for project in ['home'].concat(projects)
+					option value:project, -> getProjectName(project)
+			input '.no-js', {type:'submit', value:'Open Project'}, ->
+
 		if @document.project
-			form submit:'/project', method:'query', ->
-				select name:'project', ->
-					for own projectKey, projectName of getProjectsMapping()
-						option value:projectKey, -> projectName
-				input '.no-js', {type:'submit', value:'Open Project'}, ->
+			learnCollection = @getCollection('learn')
+			activeItemURL = '/'+(@document.url.split('/')[1] or '')
+			activeItem =
+				if activeItemURL isnt '/'
+					learnCollection.findOne(url: $startsWith: activeItemURL)
+				else
+					learnCollection.findOne(url: activeItemURL)
 
-			for own projectCategory, projectPagesInCategory of getProjectPagesByCategory()
-				activeItemURL = '/'+@document.url.split('/')[1]
-				activeItem = if activeItemURL isnt '/' then projectPagesInCategory.findOne(url: $startsWith: activeItemURL) else projectPagesInCategory.findOne(url:activeItemURL)
-				text @partial('list/menu.html.coffee', {
-					classname: "navbar"
-					items: projectPagesInCategory
-					activeItem: activeItem
-					partial: @partial
-					moment: @moment
-				})
+			projectPagesByCategory = @getProjectPagesByCategory(project)
 
-		else
-			welcomePage = {
-				id: '/'
-				url: '/'
-				title: 'Welcome'
-			}
-			projectPages = [welcomePage]
-			for projectKey, projectName of getProjectsMapping()
-				projectPages.push({
-					id: projectKey
-					url: '#'+projectKey
-					title: projectName
-				})
-			text @partial('list/menu.html.coffee', {
-				classname: "navbar"
-				items: projectPages
-				activeItem: welcomePage
+			projectCategoryItems = (
+				for own projectCategory, projectPagesInCategory of projectPagesByCategory
+					{
+						id: projectCategory
+						title: getCategoryName(projectCategory)
+						contentRenderedWithoutLayouts: @partial('list/items.html.coffee', false, {
+							classname: "category-pages"
+							items: projectCategoryItems
+							activeItem: activeItem
+							partial: @partial
+							moment: @moment
+							showDescription: false
+							showDate: false
+							showContent: false
+						})
+					}
+			)
+
+			text @partial('list/items.html.coffee', false, {
+				classname: "category"
+				items: projectCategoryItems
 				partial: @partial
 				moment: @moment
+				showDescription: false
+				showDate: false
+				showContent: true
+			})
+
+		else
+			projectPages = (
+				for project in projects
+					{
+						id: project
+						url: '#'+project
+						title: getProjectName(project)
+					}
+			)
+
+			text @partial('list/items.html.coffee', false, {
+				classname: "projects"
+				items: projectPages
+				partial: @partial
+				moment: @moment
+				showDescription: false
+				showDate: false
+				showContent: false
 			})
 
 	div '.mainbar', ->
