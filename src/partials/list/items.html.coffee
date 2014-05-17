@@ -20,11 +20,11 @@ ul ".list-#{type}"+(if cssClasses then "."+cssClasses.join('.') else ''), "typeo
 	# Exists
 	items.forEach (item) ->  # this is used instead of for in, as this could also be a backbone collection
 		# Item
-		{url,title,date,description,contentRenderedWithoutLayouts} = (item.attributes or item)
+		{id, url,title,date,description,contentRenderedWithoutLayouts} = (item.attributes or item)
 
 		# CssClasses
 		_itemCssClasses = ["list-#{type}-item"]
-		_itemCssClasses.push(if url is activeItem?.url then activeCssClasses else inactiveCssClasses)
+		_itemCssClasses.push(if id is activeItem?.id then activeCssClasses else inactiveCssClasses)
 		_itemCssClasses.concat(itemCssClasses)
 
 		# Display

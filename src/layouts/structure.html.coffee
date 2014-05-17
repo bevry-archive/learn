@@ -20,12 +20,6 @@ div '.container', ->
 
 		if @document.project
 			learnCollection = @getCollection('learn')
-			activeItemURL = '/'+(@document.url.split('/')[1] or '')
-			activeItem =
-				if activeItemURL isnt '/'
-					learnCollection.findOne(url: $startsWith: activeItemURL)
-				else
-					learnCollection.findOne(url: activeItemURL)
 
 			projectPagesByCategory = @getProjectPagesByCategory(project)
 
@@ -37,7 +31,7 @@ div '.container', ->
 						contentRenderedWithoutLayouts: @partial('list/items.html.coffee', false, {
 							classname: "category-pages"
 							items: projectPagesInCategory
-							activeItem: activeItem
+							activeItem: @document
 							partial: @partial
 							moment: @moment
 							showDescription: false
@@ -62,7 +56,7 @@ div '.container', ->
 				for project in projects
 					{
 						id: project
-						url: '#'+project
+						url: '/#'+project
 						title: getProjectName(project)
 					}
 			)

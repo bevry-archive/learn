@@ -173,14 +173,16 @@ docpadConfig =
 				# Vendor
 				"/vendor/jquery.js"
 				"/vendor/log.js"
-				"/vendor/jquery.scrollto.js"
 				"/vendor/modernizr.js"
-				"/vendor/history.js"
-				"/vendor/historyjsit.js"
+
+				# State Change
+				#"/vendor/jquery.scrollto.js"
+				#"/vendor/history.js"
+				#"/vendor/historyjsit.js"
 
 				# Scripts
-				"/scripts/bevry.js"
-				"/scripts/script.js"
+				#"/scripts/bevry.js"
+				#"/scripts/script.js"
 			].map (url) -> "#{url}?websiteVersion=#{websiteVersion}"
 
 
@@ -304,9 +306,10 @@ docpadConfig =
 					title = "#{a.title or humanize name}"
 					pageTitle = "#{title} | #{projectName}"
 
-					absoluteLink = longLink = "/learn/#{project}-#{name}"
-					shortLink = "/#{project}/#{name}"
-					urls = [longLink, shortLink]
+					categoryLink = "/##{project}"  # "/##{project}-#{category}"
+					urls = [
+						"/#{project}/#{name}"
+					]
 
 					githubEditUrl = "https://github.com/#{organisationDirectory}/documentation/edit/master/"
 					proseEditUrl = "http://prose.io/##{organisationDirectory}/documentation/edit/master/"
@@ -333,9 +336,8 @@ docpadConfig =
 							title
 							pageTitle
 
+							categoryLink
 							absoluteLink
-							longLink
-							shortLink
 							url: urls[0]
 
 							editUrl
@@ -378,7 +380,19 @@ docpadConfig =
 			aliases:
 				stylus: 'css'
 
-
+		repocloner:
+			repos: [
+				{
+					name: 'Bevry Documentation'
+					path: 'src/documents/learn/bevry'
+					url: 'https://github.com/bevry/documentation.git'
+				}
+				{
+					name: 'DocPad Documentation'
+					path: 'src/documents/learn/docpad/docpad'
+					url: 'https://github.com/docpad/documentation.git'
+				}
+			]
 
 	# =================================
 	# Environments

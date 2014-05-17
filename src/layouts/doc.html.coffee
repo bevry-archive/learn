@@ -28,6 +28,6 @@ text @partial('content/block.html.coffee', false, {
 			url: nextModel.attributes.url
 			title: nextModel.attributes.title
 	up:
-		url: "/learn/"
+		url: @document.categoryLink or '/'
 		title: @document.projectName
 })
