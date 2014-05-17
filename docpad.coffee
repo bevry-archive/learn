@@ -171,12 +171,12 @@ docpadConfig =
 			# Scripts
 			scripts: [
 				# Vendor
-				"/vendor/jquery.js"
+				#"/vendor/jquery.js"
 				"/vendor/log.js"
 				"/vendor/modernizr.js"
+				#"/vendor/jquery.scrollto.js"
 
 				# State Change
-				#"/vendor/jquery.scrollto.js"
 				#"/vendor/history.js"
 				#"/vendor/historyjsit.js"
 

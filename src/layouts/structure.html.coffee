@@ -7,8 +7,9 @@ projects = @getProjects()
 
 div '.container', ->
 	header '.topbar', ->
-		h1 '.heading.hover-link', 'data-href':'/', ->
-			@text['heading']
+		a href:'/', ->
+			h1 '.heading', ->
+				@text['heading']
 		h2 '.subheading', @text['subheading']
 
 	nav '.sidebar', ->
