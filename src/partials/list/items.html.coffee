@@ -12,13 +12,13 @@ dateFormat or= "YYYY-MM-DD"
 # Document List
 ul ".list-#{type}"+(if cssClasses then "."+cssClasses.join('.') else ''), "typeof":"dc:collection", ->
 	# Empty
-	unless items.length
+	unless items?.length
 		div ".list-#{type}-empty", ->
 			emptyText
 		return
 
 	# Exists
-	items.forEach (item) ->
+	items.forEach (item) ->  # this is used instead of for in, as this could also be a backbone collection
 		# Item
 		{url,title,date,description,contentRenderedWithoutLayouts} = (item.attributes or item)
 

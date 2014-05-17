@@ -36,7 +36,7 @@ div '.container', ->
 						title: getCategoryName(projectCategory)
 						contentRenderedWithoutLayouts: @partial('list/items.html.coffee', false, {
 							classname: "category-pages"
-							items: projectCategoryItems
+							items: projectPagesInCategory
 							activeItem: activeItem
 							partial: @partial
 							moment: @moment
