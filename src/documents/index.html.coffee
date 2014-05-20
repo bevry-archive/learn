@@ -7,7 +7,7 @@ title: "Welcome"
 # Prepare
 uniq = @uniq
 docs = @docs
-{getLabelName, getProjectName, getProjectDescription, getCategoryName, getProjects, getCategories, getCategoryCollection} = @
+{getLabelName, getProjectName, getProjectLink, getProjectDescription, getCategoryName, getProjects, getCategories, getCategoryCollection} = @
 
 
 # Welcome
@@ -27,9 +27,15 @@ nav '.reference', ->
 		for project in getProjects()
 			# Project
 			li "##{project}.project.subblock", ->
-				h2 -> getProjectName(project)
-
+				projectName = getProjectName(project)
 				projectDescription = getProjectDescription(project)
+				projectLink = getProjectLink(project)
+
+				if projectLink
+					a '.heading-link', {href:projectLink, title:'Visit Website'}, -> h2 -> projectName
+				else
+					h2 -> projectName
+
 				if projectDescription
 					p -> getProjectDescription(project)
 

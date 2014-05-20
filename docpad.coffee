@@ -32,12 +32,20 @@ textData =
 		docpad: "DocPad"
 		node: "Node.js"
 		queryengine: "Query Engine"
+		taskgroup: "TaskGroup"
 
 	projectDescriptions:
 		docpad:
 			"""
 			Unlike the other documentation links, these DocPad documentation links will take your to the DocPad website.
 			"""
+
+	projectLinks:
+		docpad: "http://docpad.org"
+		node: "http://nodejs.org"
+		taskgroup: "https://github.com/bevry/taskgroup"
+		joe: "https://github.com/bevry/joe"
+		queryengine: "https://github.com/bevry/query-engine"
 
 	categoryNames:
 		docs: "Documentation"
@@ -104,6 +112,8 @@ getProjectName = (project) ->
 	getName('projectNames', project)
 getProjectDescription = (project) ->
 	textData.projectDescriptions[project] ? ''
+getProjectLink = (project) ->
+	textData.projectLinks[project] ? ''
 getCategoryName = (category) ->
 	getName('categoryNames', category)
 getLinkName = (link) ->
@@ -212,11 +222,12 @@ docpadConfig =
 		getName: getName
 		getProjectName: getProjectName
 		getProjectDescription: getProjectDescription
+		getProjectLink: getProjectLink
 		getCategoryName: getCategoryName
 		getLinkName: getLinkName
 		getLabelName: getLabelName
-		getProjects: -> Object.keys(projectsIndex).sort (a,b) -> projectsIndex[a] - projectsIndex[b]
-		getCategories: (project) -> Object.keys(categoriesIndex[project]).sort (a,b) -> categoriesIndex[project][a] - categoriesIndex[project][b]
+		getProjects: -> Object.keys(projectsIndex).sort (a,b) -> projectsIndex[a] > projectsIndex[b]
+		getCategories: (project) -> Object.keys(categoriesIndex[project]).sort (a,b) -> categoriesIndex[project][a] > categoriesIndex[project][b]
 		getProjectCollection: (project) ->
 			projectCollection = projectCollections[project] ?= @getCollection('learn').findAllLive({project})
 		getCategoryCollection: (project, category) ->
