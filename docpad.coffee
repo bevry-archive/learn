@@ -101,15 +101,15 @@ getName = (a,b) ->
 	else
 		return textData[a][b] ? humanize(b)
 getProjectName = (project) ->
-	getName('projectNames',project)
+	getName('projectNames', project)
 getProjectDescription = (project) ->
-	getName('projectDescriptions',project)
+	textData.projectDescriptions[project] ? ''
 getCategoryName = (category) ->
-	getName('categoryNames',category)
+	getName('categoryNames', category)
 getLinkName = (link) ->
-	getName('linkNames',link)
+	getName('linkNames', link)
 getLabelName = (label) ->
-	getName('labelNames',label)
+	getName('labelNames', label)
 
 # Humanize
 humanize = (text) ->
