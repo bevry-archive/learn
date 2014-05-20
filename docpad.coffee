@@ -17,7 +17,7 @@ textData =
 		</a>
 		"""
 	copyright: """
-		&copy; Bevry Pty Ltd. <a href="https://github.com/bevry/learn">Some rights reserved.</a>
+		&copy; <a href="http://bevry.me">Bevry Pty Ltd</a>. <a href="https://github.com/bevry/learn">Some rights reserved.</a>
 		"""
 
 	linkNames:
