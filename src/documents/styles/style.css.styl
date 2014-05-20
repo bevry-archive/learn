@@ -339,6 +339,15 @@ div.container
 	flex: 1 1 auto
 	margin-left: 2%
 	position: fixed
+	opacity: 0.4
+	transition: opacity 0.5s ease-out
+	.sidebar-nav
+		transition: background 0.5s ease-out, box-shadow 0.5s ease-out, border 0.5s ease-out
+	&:hover
+		opacity: 1
+		.sidebar-nav
+			mixinBlock()
+
 
 .topbar
 	position: relative
@@ -357,10 +366,10 @@ div.container
 	z-index: 200
 
 	.sidebar-nav
-		mixinBlock()
 		border-radius: 8px
 		color: colorContent
-		padding: 0 1.5em
+		padding: 0.5em 1.5em
+		border: 1px solid transparent
 
 	li
 		margin: 0 0 0.5em
