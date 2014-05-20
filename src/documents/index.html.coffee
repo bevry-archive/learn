@@ -15,7 +15,7 @@ text """
 	<text render="markdown">
 	Welcome to the Bevry Learning Centre. Below you will find documentation about our various projects and initiatives.
 
-	Bevry is an open company and community, you can learn more about us on our [main website](http://bevry.me").
+	Bevry is an open company and community, you can learn more about us on our [main website](http://bevry.me).
 	</text>
 	"""
 
