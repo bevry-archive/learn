@@ -77,9 +77,10 @@ textData =
 
 # Indexes
 
-# indexed by project
-# then indexed by category
-documentationTree = {}
+# "project" -> "project directory"
+projectsIndex = {}
+# "project" -> "category" -> category directory"
+categoriesIndex = {}
 
 # [projectKey] = projectCollection
 projectCollections = {}
@@ -204,8 +205,8 @@ docpadConfig =
 		getCategoryName: getCategoryName
 		getLinkName: getLinkName
 		getLabelName: getLabelName
-		getProjects: -> Object.keys(documentationTree)
-		getCategories: (project) -> Object.keys(documentationTree[project])
+		getProjects: -> Object.keys(projectsIndex).sort (a,b) -> projectsIndex[a] - projectsIndex[b]
+		getCategories: (project) -> Object.keys(categoriesIndex[project]).sort (a,b) -> categoriesIndex[project][a] - categoriesIndex[project][b]
 		getProjectCollection: (project) ->
 			projectCollection = projectCollections[project] ?= @getCollection('learn').findAllLive({project})
 		getCategoryCollection: (project, category) ->
@@ -321,8 +322,9 @@ docpadConfig =
 					proseEditUrl = "http://prose.io/##{organisationDirectory}/documentation/edit/master/"
 					editUrl = githubEditUrl + a.relativePath.replace('learn/bevry/', '')
 
-					documentationTree[project] ?= {}
-					documentationTree[project][category] ?= true
+					projectsIndex[project] ?= projectDirectory
+					categoriesIndex[project] ?= {}
+					categoriesIndex[project][category] ?= categoryDirectory
 
 					if organisation is 'docpad'
 						absoluteLink = "http://docpad.org/docs/#{name}"
@@ -473,7 +475,7 @@ docpadConfig =
 
 			server.use (req,res,next) ->
 				project = req.url.replace(/^\/|\/$/g, '')
-				res.redirect(codeRedirectPermanent, "/##{project}")  if documentationTree[project]?
+				res.redirect(codeRedirectPermanent, "/##{project}")  if projectsIndex[project]?
 				next()
 
 			# DocPad Documentation
