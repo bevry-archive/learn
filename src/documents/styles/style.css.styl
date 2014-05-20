@@ -337,9 +337,7 @@ div.container
 
 .sidebar
 	flex: 1 1 auto
-	margin-left: 1%
-	height: 0%
-	padding: 0 2%
+	margin-left: 2%
 
 .topbar
 	position: relative
@@ -357,9 +355,11 @@ div.container
 	font-size: 18px
 	z-index: 200
 
-	mixinBlock()
-	border-radius: 8px
-	color: colorContent
+	.sidebar-nav
+		mixinBlock()
+		border-radius: 8px
+		color: colorContent
+		padding: 0 1.5em
 
 	li
 		margin: 0 0 0.5em

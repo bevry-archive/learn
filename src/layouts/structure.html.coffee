@@ -21,14 +21,15 @@ div '.container', ->
 				div ".copyright", @text['copyright']
 
 		if @document.category
-			nav '.sidebar', ->
-				items = [].concat @getCategoryCollection(@document.project, @document.category).models
-				text @partial('list/items.html.coffee', false, {
-					items: items
-					partial: @partial
-					moment: @moment
-					showDescription: false
-					showDate: false
-					showContent: false
-					activeItem: @document
-				})
+			div '.sidebar', ->
+				nav '.sidebar-nav.category-pages', ->
+					items = [].concat @getCategoryCollection(@document.project, @document.category).models
+					text @partial('list/items.html.coffee', false, {
+						items: items
+						partial: @partial
+						moment: @moment
+						showDescription: false
+						showDate: false
+						showContent: false
+						activeItem: @document
+					})
