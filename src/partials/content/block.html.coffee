@@ -1,9 +1,15 @@
 # Prepare
-{permalink,comments,date,heading,subheading,author,content,cssClasses,prev,next,up,document,partial} = @
+{permalink,comments,date,heading,subheading,author,content,cssClasses,prev,next,up,editUrl,partial,parents,siblings} = @
 
 # Render
 article ".block"+(if cssClasses then '.'+cssClasses.join('.') else ""), ->
 	header ".block-header", ->
+		if parents?.length
+			nav '.parentcrumbs', ->
+				for parent in parents
+					a '.permalink.hover-link', href:parent.url, ->
+						h3 parent.name
+
 		if permalink
 			a '.permalink.hover-link', href:permalink, ->
 				h1 heading
@@ -15,6 +21,12 @@ article ".block"+(if cssClasses then '.'+cssClasses.join('.') else ""), ->
 			span '.date', -> date
 		if author
 			a '.author', href:"/people/#{author}", -> author
+
+		if siblings?.length
+			nav '.siblingcrumbs', ->
+				for sibling in siblings
+					a '.permalink.hover-link', href:sibling.url, ->
+						h3 sibling.name
 
 	section ".block-content", content
 
@@ -40,6 +52,6 @@ article ".block"+(if cssClasses then '.'+cssClasses.join('.') else ""), ->
 						span ".title", -> next.title
 
 
-if document.editUrl
+if editUrl
 	aside '.block-edit', ->
-		a href:document.editUrl, "Edit and improve this page!"
+		a href:editUrl, "Edit and improve this page!"

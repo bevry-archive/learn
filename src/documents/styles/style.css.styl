@@ -314,7 +314,7 @@ div.container
 .mainbar
 	width: 90%
 	max-width: 1100px
-	left: 135px
+	// left: 135px
 	position: absolute
 
 .topbar
@@ -408,6 +408,22 @@ div.container
 		.block-header
 			position: relative
 			margin-bottom: -2em
+
+			.parentcrumbs
+			.siblingcrumbs
+				h3
+					display: inline
+					margin: 0
+					padding: 0
+
+			.parentcrumbs
+				&:after
+				a:before
+					content: '/'
+			.siblingcrumbs
+				&:before
+				a:after
+					content: '\\'
 
 			&:hover
 				.up

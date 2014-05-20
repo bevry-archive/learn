@@ -8,7 +8,6 @@ uniq = require('uniq')
 appPath = __dirname
 websiteVersion = require('./package.json').version
 isProduction = process.env.NODE_ENV is 'production'
-projects = {}
 textData =
 	heading: "Bevry's Learning Centre"
 	subheading: " &nbsp; doing everything we can to empower developers"
@@ -75,6 +74,18 @@ textData =
 
 # =================================
 # Helpers
+
+# Indexes
+
+# indexed by project
+# then indexed by category
+documentationTree = {}
+
+# [projectKey] = projectCollection
+projectCollections = {}
+
+# [categoryKey] = categoryCollection
+categoryCollections = {}
 
 # Titles
 getName = (a,b) ->
@@ -193,16 +204,12 @@ docpadConfig =
 		getCategoryName: getCategoryName
 		getLinkName: getLinkName
 		getLabelName: getLabelName
-		getProjects: -> Object.keys(projects)
-		getProjectPagesByCategory: (project) ->
-			learnCollection = @getCollection('learn')
-			project ?= @document.project
-			pagesInProject = learnCollection.findAll({'project':project}, [categoryDirectory:1])
-			categoriesInProject = uniq pagesInProject.pluck('category')
-			projectPagesByCategory = {}
-			for projectCategory in categoriesInProject
-				projectPagesByCategory[projectCategory] = pagesInProject.findAll({'category':projectCategory}, [filename:1])
-			return projectPagesByCategory
+		getProjects: -> Object.keys(documentationTree)
+		getCategories: (project) -> Object.keys(documentationTree[project])
+		getProjectCollection: (project) ->
+			projectCollection = projectCollections[project] ?= @getCollection('learn').findAllLive({project})
+		getCategoryCollection: (project, category) ->
+			categoryCollection = categoryCollections[project+'-'+category] ?= @getProjectCollection(project).findAllLive({category})
 
 		# Get the prepared site/document title
 		# Often we would like to specify particular formatting to our page's title
@@ -294,7 +301,6 @@ docpadConfig =
 
 					project = projectDirectory.replace(/[\-0-9]+/, '')
 					projectName = getProjectName(project)
-					projects[project] = projectName
 
 					category = categoryDirectory.replace(/^[\-0-9]+/, '')
 					categoryName = getCategoryName(category)
@@ -304,7 +310,8 @@ docpadConfig =
 					title = "#{a.title or humanize name}"
 					pageTitle = "#{title} | #{projectName}"
 
-					categoryLink = "/##{project}"  # "/##{project}-#{category}"
+					projectLink = "/##{project}"
+					categoryLink = "/##{project}-#{category}"
 					urls = [
 						"/#{project}/#{name}"
 						"/#{project}/#{category}/#{name}"
@@ -313,6 +320,9 @@ docpadConfig =
 					githubEditUrl = "https://github.com/#{organisationDirectory}/documentation/edit/master/"
 					proseEditUrl = "http://prose.io/##{organisationDirectory}/documentation/edit/master/"
 					editUrl = githubEditUrl + a.relativePath.replace('learn/bevry/', '')
+
+					documentationTree[project] ?= {}
+					documentationTree[project][category] ?= true
 
 					if organisation is 'docpad'
 						absoluteLink = "http://docpad.org/docs/#{name}"
@@ -335,7 +345,6 @@ docpadConfig =
 							title
 							pageTitle
 
-							categoryLink
 							absoluteLink
 							url: urls[0]
 
@@ -348,10 +357,12 @@ docpadConfig =
 							projectDirectory
 							project
 							projectName
+							projectLink
 
 							categoryDirectory
 							category
 							categoryName
+							categoryLink
 						})
 						.addUrl(urls)
 
@@ -462,7 +473,7 @@ docpadConfig =
 
 			server.use (req,res,next) ->
 				project = req.url.replace(/^\/|\/$/g, '')
-				res.redirect(codeRedirectPermanent, "/##{project}")  if projects[project]?
+				res.redirect(codeRedirectPermanent, "/##{project}")  if documentationTree[project]?
 				next()
 
 			# DocPad Documentation

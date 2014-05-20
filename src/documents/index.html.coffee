@@ -6,37 +6,32 @@ standalone: true
 # Prepare
 uniq = @uniq
 docs = @docs
-learnCollection = @getCollection('learn')
-return  unless learnCollection
-{getLabelName, getProjectName, getCategoryName, getProjectPagesByCategory} = @
+{getLabelName, getProjectName, getCategoryName, getProjects, getCategories, getCategoryCollection} = @
 
 # Prepare
 nav '.reference', ->
 
 	# Projects
 	ul ".projects", ->
-		projects = uniq learnCollection.pluck('project')
-		for project in projects
-			projectPagesByCategory = getProjectPagesByCategory(project)
-			projectCategories = Object.keys(projectPagesByCategory)
-
+		for project in @getProjects()
 			# Project
 			li "##{project}.project.subblock", ->
 				h2 -> getProjectName(project)
 
 				# Categories
-				columns = if projectCategories.length > 4 then 4 else projectCategories.length
+				categories = @getCategories(project)
+				columns = if categories.length > 4 then 4 else categories.length
 				ul ".categories.columns-#{columns}", ->
-					for own projectCategory, pagesInProjectCategory of projectPagesByCategory
+					for category in categories
+						pages = @getCategoryCollection(project, category)
 
 						# Category
-						li "##{project}-#{projectCategory}.category", ->
-							h3 -> getCategoryName(projectCategory)
+						li "##{project}-#{category}.category", ->
+							h3 -> getCategoryName(category)
 
 							# Pages
 							ul ".pages", ->
-								pagesInProjectCategory.forEach (page) ->
-
+								pages.forEach (page) ->
 									# Page
 									li ".page", ->
 										h4 '.title', ->
