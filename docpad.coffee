@@ -33,6 +33,12 @@ textData =
 		node: "Node.js"
 		queryengine: "Query Engine"
 
+	projectDescriptions:
+		docpad:
+			"""
+			Unlike the other documentation links, these DocPad documentation links will take your to the DocPad website.
+			"""
+
 	categoryNames:
 		docs: "Documentation"
 		start: "Getting Started"
@@ -96,6 +102,8 @@ getName = (a,b) ->
 		return textData[a][b] ? humanize(b)
 getProjectName = (project) ->
 	getName('projectNames',project)
+getProjectDescription = (project) ->
+	getName('projectDescriptions',project)
 getCategoryName = (category) ->
 	getName('categoryNames',category)
 getLinkName = (link) ->
@@ -202,6 +210,7 @@ docpadConfig =
 		# Names
 		getName: getName
 		getProjectName: getProjectName
+		getProjectDescription: getProjectDescription
 		getCategoryName: getCategoryName
 		getLinkName: getLinkName
 		getLabelName: getLabelName

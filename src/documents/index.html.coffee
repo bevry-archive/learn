@@ -7,7 +7,7 @@ title: "Welcome"
 # Prepare
 uniq = @uniq
 docs = @docs
-{getLabelName, getProjectName, getCategoryName, getProjects, getCategories, getCategoryCollection} = @
+{getLabelName, getProjectName, getProjectDescription, getCategoryName, getProjects, getCategories, getCategoryCollection} = @
 
 
 # Welcome
@@ -24,17 +24,21 @@ nav '.reference', ->
 
 	# Projects
 	ul ".projects", ->
-		for project in @getProjects()
+		for project in getProjects()
 			# Project
 			li "##{project}.project.subblock", ->
 				h2 -> getProjectName(project)
 
+				projectDescription = getProjectDescription(project)
+				if projectDescription
+					p -> getProjectDescription(project)
+
 				# Categories
-				categories = @getCategories(project)
+				categories = getCategories(project)
 				columns = if categories.length > 4 then 4 else categories.length
 				ul ".categories.columns-#{columns}", ->
 					for category in categories
-						pages = @getCategoryCollection(project, category)
+						pages = getCategoryCollection(project, category)
 
 						# Category
 						li "##{project}-#{category}.category", ->
