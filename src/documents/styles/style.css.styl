@@ -227,6 +227,24 @@ em
 	color: colorAccent
 	font-style: normal
 
+/* Link to Main Website */
+a.main-website
+	position: fixed
+	z-index: 100
+	top: 11px
+	right: 10px
+	padding: 8px 12px
+
+	border: 1px solid #eee
+	background: #FAFAFA // rgba(238, 238, 238, 0.33)
+	color: #aaa
+
+	font-size: 0.8em
+	font-weight: 600
+	line-height: 1.4
+
+	border-radius: 3px
+
 code
 pre code
 	font-family: Consolas, Monaco, 'Source Code Pro', 'courier new', monospace, serif
@@ -305,17 +323,23 @@ div.container
 	margin: 2em 4%
 	position: relative
 
-.sidebar
-	position: absolute
-	width: 10%
-	max-width: 135px
-	left: 0
+.innerbar
+	display: flex
+	flex-direction: row
+
+.topbar
+	flex: 1 1 auto
 
 .mainbar
 	width: 90%
 	max-width: 1100px
-	// left: 135px
-	position: absolute
+	flex: 1 1 auto
+
+.sidebar
+	flex: 1 1 auto
+	margin-left: 1%
+	height: 0%
+	padding: 0 2%
 
 .topbar
 	position: relative
@@ -333,6 +357,10 @@ div.container
 	font-size: 18px
 	z-index: 200
 
+	mixinBlock()
+	border-radius: 8px
+	color: colorContent
+
 	li
 		margin: 0 0 0.5em
 	li.active
@@ -343,45 +371,6 @@ div.container
 		mixinNav()
 		&:hover
 			text-decoration: underline
-
-	&:hover .promos .promo
-		opacity: 1
-		border: 1px solid hsla(53, 19%, 58%, 0.2)
-
-	.promos
-		margin-top: 1.5em
-		overflow-y: auto
-		margin-left: -1em
-		padding-right: 0.5em
-
-		.promo
-			display: block
-			padding: 1.3em 1em 1em 1em
-			margin-bottom: 1.5em
-			width: 100%
-			max-width: 150px
-			font-size: 12px
-			transition: opacity 1s ease-out, border 1s ease-out
-			opacity: 0.5
-			background: hsl(40, 20%, 96%)
-			border: 1px solid hsl(40, 20%, 96%)
-
-			cursor: pointer
-			line-height: 1.2em
-
-			span,a
-				display: block
-
-			.title
-				font-weight: bold
-			.description
-				font-style: italic
-				font-size: 10px
-				font-weight: normal
-
-			&:hover
-				span
-					text-decoration: underline
 
 
 .mainbar
@@ -411,19 +400,27 @@ div.container
 
 			.parentcrumbs
 			.siblingcrumbs
+				opacity: 0.1
+				transition: opacity 0.2s ease-out
+				&:hover
+					opacity: 1
+				padding-bottom: 1em
+				&, h3
+					font-size: 1em
 				h3
 					display: inline
 					margin: 0
 					padding: 0
+				ul, li
+					list-style: none
+					display: inline
 
 			.parentcrumbs
 				&:after
-				a:before
+				li:before
 					content: '/'
-			.siblingcrumbs
-				&:before
-				a:after
-					content: '\\'
+				a
+					padding: 0 0.25em
 
 			&:hover
 				.up
@@ -439,6 +436,7 @@ div.container
 				list-style: none
 
 			.reference
+				padding-top: 1em
 				h3
 					margin: 1em 0
 				h4
@@ -663,9 +661,12 @@ div.container
 // Below is merely an example of how this should work
 
 // Small Screen
-@media screen and (max-width: 960px)
-	*
-		opacity: 1 !important
+@media screen and (max-width: 1100px)
+	.bottombar
+	.block-edit
+	.block-footer
+		*
+			opacity: 1 !important
 
 	body
 		padding-bottom: 4em
@@ -683,16 +684,7 @@ div.container
 			padding: 0
 
 	.sidebar
-		width: 100%
-		max-width: none
-		position: relative
-		text-align: center
-		line-height: 2em
-		li
-			display: inline
-			margin: 0 0.5em
-		.promos
-			display: none
+		display: none
 
 	.mainbar
 		width: 100%

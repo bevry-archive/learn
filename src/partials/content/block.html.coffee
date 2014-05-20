@@ -5,10 +5,9 @@
 article ".block"+(if cssClasses then '.'+cssClasses.join('.') else ""), ->
 	header ".block-header", ->
 		if parents?.length
-			nav '.parentcrumbs', ->
+			nav '.parentcrumbs', -> ul ->
 				for parent in parents
-					a '.permalink.hover-link', href:parent.url, ->
-						h3 parent.name
+					li -> a '.permalink', href:parent.url, -> h3 parent.name
 
 		if permalink
 			a '.permalink.hover-link', href:permalink, ->
@@ -21,12 +20,6 @@ article ".block"+(if cssClasses then '.'+cssClasses.join('.') else ""), ->
 			span '.date', -> date
 		if author
 			a '.author', href:"/people/#{author}", -> author
-
-		if siblings?.length
-			nav '.siblingcrumbs', ->
-				for sibling in siblings
-					a '.permalink.hover-link', href:sibling.url, ->
-						h3 sibling.name
 
 	section ".block-content", content
 

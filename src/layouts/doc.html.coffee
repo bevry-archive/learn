@@ -22,6 +22,10 @@ siblings = siblings.map (item) ->
 	}
 parents = [
 	{
+		url: '/'
+		name: 'Learning Centre'
+	},
+	{
 		url: @document.projectLink
 		name: @document.projectName
 	},
