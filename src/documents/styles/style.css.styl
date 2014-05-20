@@ -307,6 +307,15 @@ blockquote
 	&.label-important
 		background: hsl(1, 45%, 50%)
 
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 a:not(.hover-link),.link
 	cursor: pointer
 	text-decoration: none
@@ -316,6 +325,8 @@ a:not(.hover-link),.link
 	cursor: pointer
 	text-decoration: none
 	color: inherit
+	&.current
+		animation: fadeIn 1s
 a:hover,.hover-link:hover
 	text-decoration: underline
 

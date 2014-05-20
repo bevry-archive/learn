@@ -201,6 +201,7 @@ docpadConfig =
 				# Scripts
 				#"/scripts/bevry.js"
 				#"/scripts/script.js"
+				"/scripts/refresh.js"
 			].map (url) -> "#{url}?websiteVersion=#{websiteVersion}"
 
 
