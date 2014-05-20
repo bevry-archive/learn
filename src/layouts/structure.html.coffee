@@ -3,9 +3,9 @@ layout: default
 ###
 
 
-a '.main-website', href:'http://bevry.me', -> 'About Bevry'
-
 div '.container', ->
+	a '.main-website', href:'http://bevry.me', -> 'About Bevry'
+
 	header '.topbar', ->
 		a href:'/', ->
 			h1 '.heading', ->
