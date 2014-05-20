@@ -29,7 +29,7 @@ cleancss: true
 // Everything
 *
 	// Make paddings be included within the width
-	box-sizing border-box
+	box-sizing: border-box
 
 // Provide our wrapper mixin
 // Contains our resize transition
@@ -342,17 +342,19 @@ div.container
 	flex: 1 1 auto
 
 .mainbar
-	width: 90%
 	max-width: 1100px
 	flex: 1 1 auto
 
 .sidebar
-	flex: 1 1 auto
+	flex: 1 0 auto
 	margin-left: 2%
-	position: fixed
 	opacity: 0.4
 	transition: opacity 0.5s ease-out
+	width: 12em
 	.sidebar-nav
+		width: 12em
+		position: fixed
+		padding: 0 1em /* top right bottom left */
 		transition: background 0.5s ease-out, box-shadow 0.5s ease-out, border 0.5s ease-out
 	&:hover
 		opacity: 1
@@ -401,7 +403,6 @@ div.container
 	.block-edit
 		display: block
 		text-align: right
-		padding: 1.5em 0 1em /* top right bottom left */
 		a
 			transition: all 0.2s ease-out
 			color: colorAccent
