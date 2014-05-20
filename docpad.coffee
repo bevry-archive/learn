@@ -190,7 +190,7 @@ docpadConfig =
 			scripts: [
 				# Vendor
 				#"/vendor/jquery.js"
-				"/vendor/log.js"
+				#"/vendor/log.js"
 				"/vendor/modernizr.js"
 				#"/vendor/jquery.scrollto.js"
 
