@@ -489,11 +489,12 @@ docpadConfig =
 				else
 					res.send(codeBadRequest, 'key is incorrect')
 
-			# Project Select
+			# /project/node => /#node
 			server.all /^\/project(?:\/(.*))?$/, (req,res) ->
 				project = req.query.project or req.body.project or req.params[0]
 				res.redirect(codeRedirectPermanent, "/##{project}")
 
+			# /node => /#node
 			server.use (req,res,next) ->
 				project = req.url.replace(/^\/|\/$/g, '')
 				res.redirect(codeRedirectPermanent, "/##{project}")  if projectsIndex[project]?
