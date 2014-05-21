@@ -335,6 +335,7 @@ docpadConfig =
 					urls = [
 						"/#{project}/#{name}"
 						"/#{project}/#{category}/#{name}"
+						"/#{project}-#{name}"
 					]
 
 					githubEditUrl = "https://github.com/#{organisationDirectory}/documentation/edit/master/"
