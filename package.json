@@ -41,8 +41,7 @@
     "docpad-plugin-uglify": "~2.4.0",
     "extendr": "~2.1.0",
     "moment": "~2.4.0",
-    "request": "~2.27.0",
-    "uniq": "^1.0.0"
+    "request": "~2.27.0"
   },
   "devDependencies": {
     "docpad-plugin-livereload": "~2.6.0"

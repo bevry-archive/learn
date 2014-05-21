@@ -2,7 +2,6 @@
 fsUtil = require('fs')
 pathUtil = require('path')
 moment = require('moment')
-uniq = require('uniq')
 
 # Prepare
 appPath = __dirname
@@ -158,7 +157,6 @@ docpadConfig =
 		# Misc
 
 		text: textData
-		uniq: uniq
 		moment: moment
 		nodeVersion: process.version
 		nodeMajorMinorVersion: process.version.replace(/^v/,'').split('.')[0...2].join('.')

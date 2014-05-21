@@ -5,8 +5,6 @@ title: "Welcome"
 ###
 
 # Prepare
-uniq = @uniq
-docs = @docs
 {getLabelName, getProjectName, getProjectLink, getProjectDescription, getCategoryName, getProjects, getCategories, getCategoryCollection} = @
 
 
