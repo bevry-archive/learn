@@ -504,6 +504,16 @@ docpadConfig =
 			server.get /^\/docpad(?:\/(.*))?$/, (req,res) ->
 				res.redirect(codeRedirectPermanent, "http://docpad.org/#{req.params[0] or ''}")
 
+			# Common Redirects
+			redirects =
+				'/taskgroup/api': 'http://rawgit.com/bevry/taskgroup/master/docs/index.html'
+			server.use (req,res,next) ->
+				target = redirects[req.url]
+				if target
+					res.redirect(codeRedirectPermanent, target)
+				else
+					next()
+
 			# Done
 			return
 
