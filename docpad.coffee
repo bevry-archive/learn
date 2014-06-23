@@ -496,6 +496,10 @@ docpadConfig =
 				res.redirect(codeRedirectPermanent, "/##{project}")  if projectsIndex[project]?
 				next()
 
+			# /bevry/* => /community/*
+			server.get /^\/bevry\/(.*)$/, (req,res) ->
+				res.redirect(codeRedirectPermanent, "/community/#{req.params[0] or ''}")
+
 			# DocPad Documentation
 			server.get /^\/learn\/docpad\-(.*)$/, (req,res) ->
 				res.redirect(codeRedirectPermanent, "http://docpad.org/docs/#{req.params[0] or ''}")
