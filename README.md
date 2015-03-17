@@ -1,6 +1,15 @@
 # [Bevry's Learning Centre Website](http://learn.bevry.me)
 
-<!-- BADGES -->
+<!-- BADGES/ -->
+
+[![Build Status](https://img.shields.io/travis/bevry/bevry-learn/master.svg)](http://travis-ci.org/bevry/bevry-learn "Check this project's build status on TravisCI")<br/>
+[![Gratipay donate button](https://img.shields.io/gratipay/bevry.svg)](https://www.gratipay.com/bevry/ "Donate weekly to this project using Gratipay")
+[![Flattr donate button](https://img.shields.io/badge/flattr-donate-yellow.svg)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
+[![PayPayl donate button](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
+[![BitCoin donate button](https://img.shields.io/badge/bitcoin-donate-yellow.svg)](https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a "Donate once-off to this project using BitCoin")
+[![Wishlist browse button](https://img.shields.io/badge/wishlist-donate-yellow.svg)](http://amzn.com/w/2F8TXKSNAFG4V "Buy an item on our wishlist for us")
+
+<!-- /BADGES -->
 
 
 ## Getting Started
@@ -34,4 +43,19 @@ These repositories are pulled into this website for rendering at run-time.
 If you wish to update documentation content, you'll need to make changes to those repositories instead. Changes in repository are only for customising the design and rendering of the documentation.
 
 
-<!-- LICENSE -->
+<!-- LICENSE/ -->
+
+## License
+
+Unless stated otherwise all works are:
+
+- Copyright &copy; Bevry Pty Ltd <us@bevry.me> (http://bevry.me)
+
+and licensed under:
+
+- The incredibly [permissive](http://en.wikipedia.org/wiki/Permissive_free_software_licence) [MIT License](http://opensource.org/licenses/mit-license.php)
+- The [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/)
+
+<!-- /LICENSE -->
+
+
