@@ -182,7 +182,7 @@ docpadConfig =
 				#disqus: 'bevry'
 				#gauges: '5077ad8cf5a1f5067b000027'
 				googleAnalytics: 'UA-35505181-1'
-				reinvigorate: 'dy05w-88s5zok1o8'
+				#reinvigorate: 'dy05w-88s5zok1o8'
 				#zopim: '0tni8T2G7P86SxDwmxCa4HCySsGPRESg'
 
 			# Styles
@@ -422,6 +422,29 @@ docpadConfig =
 				}
 			]
 
+		cleanurls:
+			simpleRedirects:
+				'/taskgroup/api': 'http://rawgit.com/bevry/taskgroup/master/docs/index.html'
+
+			advancedRedirects: [
+				# /project/PROJECT => /#PROJECT
+				[/^\/project\/(.+)$/, '/#$1']
+
+				# legacy
+				# /PROJECT => /#PROJECT
+				[/^\/(query-engine|joe|taskgroup|community|node)\/?$/, '/#$1']
+
+				# legacy
+				# /bevry/* => /community/*
+				[/^\/bevry\/(.*)$/, '/community/$1']
+
+				# DocPad Documentation
+				[/^\/learn\/docpad\-(.*)$/, 'https://docpad.org/docs/$1']
+
+				# DocPad General
+				[/^\/docpad(?:\/(.*))?$/, 'http://docpad.org/$1']
+			]
+
 	# =================================
 	# Environments
 
@@ -436,90 +459,6 @@ docpadConfig =
 						mixpanel: false
 						reinvigorate: false
 
-
-	# =================================
-	# Events
-
-	events:
-
-		# Server Extend
-		# Used to add our own custom routes to the server before the docpad routes are added
-		serverExtend: (opts) ->
-			# Extract the server from the options
-			{server, express} = opts
-			docpad = @docpad
-			request = require('request')
-			extendr = require('extendr')
-			codeSuccess = 200
-			codeBadRequest = 400
-			codeRedirectPermanent = 301
-			codeRedirectTemporary = 302
-
-			# Pushover
-			server.all '/pushover', (req,res) ->
-				return res.send(codeSuccess)  if 'development' in docpad.getEnvironments()
-				request(
-					{
-						url: "https://api.pushover.net/1/messages.json"
-						method: "POST"
-						form: extendr.extend(
-							{
-								token: process.env.BEVRY_PUSHOVER_TOKEN
-								user: process.env.BEVRY_PUSHOVER_USER_KEY
-								message: req.query
-							}
-							req.query
-						)
-					}
-					(_req,_res,body) ->
-						res.send(body)
-				)
-
-			# Documentation Regenerate Hook
-			# Automatically regenerate when new changes are pushed to our documentation
-			server.all '/regenerate', (req,res) ->
-				if req.query?.key is process.env.WEBHOOK_KEY
-					docpad.log('info', 'Regenerating for documentation change')
-					docpad.action('generate', {populate:true, reload:true})
-					res.send(codeSuccess, 'regenerated')
-				else
-					res.send(codeBadRequest, 'key is incorrect')
-
-			# /project/node => /#node
-			server.all /^\/project(?:\/(.*))?$/, (req,res) ->
-				project = req.query.project or req.body.project or req.params[0]
-				res.redirect(codeRedirectPermanent, "/##{project}")
-
-			# /node => /#node
-			server.use (req,res,next) ->
-				project = req.url.replace(/^\/|\/$/g, '')
-				res.redirect(codeRedirectPermanent, "/##{project}")  if projectsIndex[project]?
-				next()
-
-			# /bevry/* => /community/*
-			server.get /^\/bevry\/(.*)$/, (req,res) ->
-				res.redirect(codeRedirectPermanent, "/community/#{req.params[0] or ''}")
-
-			# DocPad Documentation
-			server.get /^\/learn\/docpad\-(.*)$/, (req,res) ->
-				res.redirect(codeRedirectPermanent, "http://docpad.org/docs/#{req.params[0] or ''}")
-
-			# DocPad General
-			server.get /^\/docpad(?:\/(.*))?$/, (req,res) ->
-				res.redirect(codeRedirectPermanent, "http://docpad.org/#{req.params[0] or ''}")
-
-			# Common Redirects
-			redirects =
-				'/taskgroup/api': 'http://rawgit.com/bevry/taskgroup/master/docs/index.html'
-			server.use (req,res,next) ->
-				target = redirects[req.url]
-				if target
-					res.redirect(codeRedirectPermanent, target)
-				else
-					next()
-
-			# Done
-			return
 
 
 # Export our DocPad Configuration
