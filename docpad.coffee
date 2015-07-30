@@ -427,6 +427,9 @@ docpadConfig =
 				'/taskgroup/api': 'http://rawgit.com/bevry/taskgroup/master/docs/index.html'
 
 			advancedRedirects: [
+				# Old URLs
+				[/^https?:\/\/(?:herokuapp\.com|bevry\.github\.io\/learn)(.*)$/, 'https://learn.bevry.me$1']
+
 				# /project/PROJECT => /#PROJECT
 				[/^\/project\/(.+)$/, '/#$1']
 
