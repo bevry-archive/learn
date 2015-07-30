@@ -428,7 +428,7 @@ docpadConfig =
 
 			advancedRedirects: [
 				# Old URLs
-				[/^https?:\/\/(?:herokuapp\.com|bevry\.github\.io\/learn)(.*)$/, 'https://learn.bevry.me$1']
+				[/^https?:\/\/(?:bevry-learn\.herokuapp\.com|bevry\.github\.io\/learn)(.*)$/, 'https://learn.bevry.me$1']
 
 				# /project/PROJECT => /#PROJECT
 				[/^\/project\/(.+)$/, '/#$1']
