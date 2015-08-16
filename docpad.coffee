@@ -138,14 +138,7 @@ humanize = (text) ->
 # The DocPad Configuration File
 # It is simply a CoffeeScript Object which is parsed by CSON
 docpadConfig =
-
-	# =================================
-	# DocPad Configuration
-
-	# Regenerate each day
-	regenerateEvery: 1000*60*60*24
-
-
+	
 	# =================================
 	# Template Data
 	# These are variables that will be accessible via our templates
