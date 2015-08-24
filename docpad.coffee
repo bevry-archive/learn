@@ -138,7 +138,7 @@ humanize = (text) ->
 # The DocPad Configuration File
 # It is simply a CoffeeScript Object which is parsed by CSON
 docpadConfig =
-	
+
 	# =================================
 	# Template Data
 	# These are variables that will be accessible via our templates

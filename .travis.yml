@@ -43,12 +43,15 @@ after_success: >
   fi
 
 # Custom Configuration
-# travis encrypt "DEPLOY_USER=$GITHUB_USERNAME" --add env.global
-# travis encrypt "DEPLOY_TOKEN=$GITHUB_TRAVIS_TOKEN" --add env.global
 env:
   global:
+    # deployment environment variables
+    # travis encrypt "DEPLOY_USER=$GITHUB_USERNAME" --add env.global
+    # travis encrypt "DEPLOY_TOKEN=$GITHUB_TRAVIS_TOKEN" --add env.global
     - DEPLOY_BRANCH='master'  # this is the branch name that you want tested and deployed, set correctly
     - DEPLOY_NAME='Travis CI Deployer'  # this is the name that is used for the deployment commit, set to whatever
     - DEPLOY_EMAIL='deployer@travis-ci.org'  # this is the email that is used for the deployment commit, set to whatever
     - secure: AhG5pWLJKF0Ygo0Pxr61GjN2kqMpQuuB+z+Yiz7VY5FDnrJnnM2ezM0OrQq/JmoDQgfsoINrue7dSiNkLHLA+yKOBOCDBnTMxmaSgxZu9cVyPMhzK9wnpinnVwtgab73IqrbpSzWNqbZLrbqw/4eQ8aty5QIHd6vU5DBIGT0nrQ=
     - secure: FR6/cp8mgxTpYMkx0TOlXHGSxK8sSa22lV2x/HIwvLuHZGTe9qNRNNOPzXR3SmZa1Qe2d+KSlwnZRI9Z5Y1t+CD4btL4eTd0rGUEWf07cD/Y+VrX8YFOK/sEHEP6ktLAs9Zqn1sBy4KDkpcryZmXc6GgvmsaxPCm5QM7rm7kzE0=
+    # application environment variables
+    # none
