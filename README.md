@@ -5,7 +5,7 @@
 [![Build Status](https://img.shields.io/travis/bevry/bevry-learn/master.svg)](http://travis-ci.org/bevry/bevry-learn "Check this project's build status on TravisCI")<br/>
 [![Gratipay donate button](https://img.shields.io/gratipay/bevry.svg)](https://www.gratipay.com/bevry/ "Donate weekly to this project using Gratipay")
 [![Flattr donate button](https://img.shields.io/badge/flattr-donate-yellow.svg)](http://flattr.com/thing/344188/balupton-on-Flattr "Donate monthly to this project using Flattr")
-[![PayPayl donate button](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
+[![PayPal donate button](https://img.shields.io/badge/paypal-donate-yellow.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QB8GQPZAH84N6 "Donate once-off to this project using Paypal")
 [![BitCoin donate button](https://img.shields.io/badge/bitcoin-donate-yellow.svg)](https://coinbase.com/checkouts/9ef59f5479eec1d97d63382c9ebcb93a "Donate once-off to this project using BitCoin")
 [![Wishlist browse button](https://img.shields.io/badge/wishlist-donate-yellow.svg)](http://amzn.com/w/2F8TXKSNAFG4V "Buy an item on our wishlist for us")
 
@@ -33,9 +33,9 @@
 
 ## Documentation Repositories
 
-The documentation is actually stored in two seperate repositories:
+The documentation is actually stored in two separate repositories:
 
-- [bevry/documentation](https://github.com/bevry/documentation) for general documentation for miscelanous bevry projects and whatever
+- [bevry/documentation](https://github.com/bevry/documentation) for general documentation for miscellaneous bevry projects and whatever
 - [docpad/documentation](https://github.com/docpad/documentation) for docpad specific documentation
 
 These repositories are pulled into this website for rendering at run-time.
