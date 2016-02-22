@@ -170,15 +170,6 @@ docpadConfig =
 				bevry, bevryme, balupton, benjamin lupton, docpad, history.js, node.js, javascript, coffee-script, query-engine
 				"""
 
-			# Services
-			services:
-				#disqus: 'bevry'
-				#gauges: '5077ad8cf5a1f5067b000027'
-				#googleAnalytics: 'UA-35505181-1'
-				#reinvigorate: 'dy05w-88s5zok1o8'
-				#zopim: '0tni8T2G7P86SxDwmxCa4HCySsGPRESg'
-				# ^ no more external analytics, cloudflare gives us what we need
-
 			# Styles
 			styles: [
 				'/styles/style.css'
