@@ -29,11 +29,12 @@
   },
   "author": "Bevry Pty Ltd <us@bevry.me> (http://bevry.me)",
   "maintainers": [
-    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
+    "Benjamin Lupton <b@lupton.cc> (https://balupton.com)"
   ],
   "contributors": [
-    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)",
-    "ginader (https://github.com/ginader)"
+    "Benjamin Lupton <b@lupton.cc> (https://balupton.com)",
+    "Dirk Ginader (http://ginader.com)",
+    "vsopvsop (https://github.com/vsopvsop)"
   ],
   "bugs": {
     "url": "https://github.com/bevry/learn/issues"
