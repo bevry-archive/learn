@@ -409,7 +409,7 @@ docpadConfig =
 
 		cleanurls:
 			simpleRedirects:
-				'/taskgroup/api': 'http://rawgit.com/bevry/taskgroup/master/docs/index.html'
+				'/taskgroup/api/': 'http://rawgit.com/bevry/taskgroup/master/docs/'
 
 			advancedRedirects: [
 				# Old URLs
