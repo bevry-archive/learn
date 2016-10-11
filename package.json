@@ -44,7 +44,7 @@
     "url": "http://github.com/bevry/learn.git"
   },
   "engines": {
-    "node": "5",
+    "node": "6",
     "npm": "3"
   },
   "dependencies": {
@@ -74,9 +74,9 @@
   },
   "main": "node_modules/.bin/docpad-server",
   "scripts": {
-    "start": "node_modules/.bin/docpad-server",
-    "test": "node_modules/.bin/docpad generate --silent",
-    "info": "node_modules/.bin/docpad info --silent",
-    "deploy": "node_modules/.bin/docpad deploy-ghpages --silent --env static"
+    "start": "docpad-server",
+    "test": "docpad generate --silent",
+    "info": "docpad info --silent",
+    "deploy": "docpad deploy-ghpages --silent --env static"
   }
 }
