@@ -409,6 +409,9 @@ docpadConfig =
 
 		cleanurls:
 			simpleRedirects:
+				'/taskgroup/guide/': 'https://github.com/bevry/taskgroup/wiki/Introduction-&-Usage'
+				'/taskgroup/comparisons': 'https://github.com/bevry/taskgroup/wiki/Compare'
+				'/taskgroup/showcase': 'https://github.com/bevry/taskgroup/wiki/Showcase'
 				'/taskgroup/api/': 'http://rawgit.com/bevry/taskgroup/master/docs/'
 
 			advancedRedirects: [
