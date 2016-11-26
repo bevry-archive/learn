@@ -436,21 +436,6 @@ docpadConfig =
 				[/^\/docpad(?:\/(.*))?$/, 'http://docpad.org/$1']
 			]
 
-	# =================================
-	# Environments
-
-	# Disable analytic services on the development environment
-	environments:
-		development:
-			templateData:
-				site:
-					services:
-						gauges: false
-						googleAnalytics: false
-						mixpanel: false
-						reinvigorate: false
-
-
 
 # Export our DocPad Configuration
 module.exports = docpadConfig
