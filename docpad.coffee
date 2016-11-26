@@ -413,6 +413,8 @@ docpadConfig =
 				'/taskgroup/comparisons': 'https://github.com/bevry/taskgroup/wiki/Compare'
 				'/taskgroup/showcase': 'https://github.com/bevry/taskgroup/wiki/Showcase'
 				'/taskgroup/api': 'http://rawgit.com/bevry/taskgroup/master/docs/'
+				'/joe/guide': 'https://github.com/bevry/joe/wiki/Introduction-&-Usage'
+				'/queryengine/guide': 'https://github.com/bevry/query-engine/wiki/Using'
 
 			advancedRedirects: [
 				# Old URLs
@@ -423,11 +425,11 @@ docpadConfig =
 
 				# legacy
 				# /PROJECT => /#PROJECT
-				[/^\/(query-engine|joe|taskgroup|community|node)\/?$/, '/#$1']
+				# [/^\/(query-engine|joe|taskgroup|community|node)\/?$/, '/#$1']
 
 				# legacy
 				# /bevry/* => /community/*
-				[/^\/bevry\/(.*)$/, '/community/$1']
+				# [/^\/bevry\/(.*)$/, '/community/$1']
 
 				# DocPad Documentation
 				[/^\/learn\/docpad\-(.*)$/, 'https://docpad.org/docs/$1']
