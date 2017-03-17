@@ -1,57 +1,89 @@
-# August 25, 2015
+# 2015 August 25
 # https://docpad.org/docs/deploy
 
-# Use the latest travis infrastructure
 sudo: false
-
-# We use node
 language: node_js
 node_js:
-  - "5"
+  - "6"     # lts
 cache:
   directories:
-    - node_modules
+    - $HOME/.npm  # http://stackoverflow.com/q/42521884/130638
 
-# Prepare and run our tests
-script: "npm test"
-
-# Custom Notifications
-# travis encrypt "$TRAVIS_NOTIFICATION_EMAIL" --add notifications.email.recipients
-# travis encrypt "$SLACK_SUBDOMAIN:$SLACK_TRAVIS_TOKEN#updates" --add notifications.slack
-notifications:
-  email:
-    recipients:
-      secure: XBo4hArA6WkXfCZDUHbsNbg9qvgYyPxAlX3MBLxC7spSz7Oky1YmqlmrEUP4WDMdJ1cCmxymxGG5CSXqn7J79HcZUwW7NEkUrjU1CpC1bonMyyC8bBLSnwuaS83pxN8vXj+HaI44hDytWH5cpZdSNeeOHd7ygCiwROo+Vz/HpEs=
-  slack:
-    secure: FDVF8Ybz7HZUeI89YB05B1lv2QVzI7VoYp6hFvSszF5cxdm4eE2Ddk0GaAMkhEaB73NwxEbtCzJqyY4GMkRx9BPwGtneR4eLMnyHDEAAAUPUzLN0N9dFQw+j/l0KNOtGm7EX4Cpgo0xVE1gNYFu9TaS/SnCROUep9W2oL+tD5NY=
-
-# Deployment
-after_success: >
-  if ([ ! -z "$DEPLOY_TOKEN" ] &&
-      [ "$TRAVIS_BRANCH" == "$DEPLOY_BRANCH" ] &&
-      [ -z "$TRAVIS_TAG" ] &&
-      [ "$TRAVIS_PULL_REQUEST" == "false" ]); then
-    echo "Deploying";
-    git config --global user.email "$DEPLOY_EMAIL";
-    git config --global user.name "$DEPLOY_NAME";
-    git remote rm origin;
-    git remote add origin "https://$DEPLOY_USER:$DEPLOY_TOKEN@github.com/$TRAVIS_REPO_SLUG.git";
-    npm run-script deploy;
-    echo "Deployed";
-  else
-    echo "Skipped deploy"
+install: |
+  # Ensure NPM is latest
+  # https://github.com/balupton/awesome-travis#ensure-npm-is-latest
+  export CURRENT_NPM_VERSION="$(npm --version)" || exit -1
+  export LATEST_NPM_VERSION="$(npm view npm version)" || exit -1
+  if test "$CURRENT_NPM_VERSION" != "$LATEST_NPM_VERSION"; then
+    echo "running an old npm version $CURRENT_NPM_VERSION, upgrading npm to $LATEST_NPM_VERSION..."
+    npm install npm --global --cache-min=Infinity || exit -1
+    echo "...npm upgrade complete"
   fi
 
+install: |
+  # Ensure dependencies install with a LTS node version
+  # https://github.com/balupton/awesome-travis#use-lts-node-version-for-preparation
+  export CURRENT_NODE_VERSION="$(node --version)" || exit -1
+  export LTS_NODE_VERSIONS="$(nvm ls-remote --lts)" || exit -1
+  if echo "$LTS_NODE_VERSIONS" | grep "$CURRENT_NODE_VERSION"; then
+    echo "running on a LTS node version, completing setup..."
+    npm run our:setup || exit -1
+    echo "...setup complete with current LTS version"
+  else
+    echo "running on a non-LTS node version, completing setup on a LTS node version..."
+    nvm install --lts
+    export LTS_NODE_INSTALLED_VERSION="$(node --version)" || exit -1
+    npm run our:setup || exit -1
+    nvm use "$TRAVIS_NODE_VERSION" || exit -1
+    echo "...setup complete with LTS"
+  fi
+
+before_script: |
+  # Ensure compilation and linting occur on a LTS node version
+  # https://github.com/balupton/awesome-travis#use-lts-node-version-for-preparation
+  if test "$LTS_NODE_INSTALLED_VERSION"; then
+    echo "running on a non-LTS node version, compiling with LTS, skipping linting..."
+    nvm use "$LTS_NODE_INSTALLED_VERSION" || exit -1
+    npm run our:compile || exit -1
+    nvm use "$TRAVIS_NODE_VERSION" || exit -1
+    echo "...compiled"
+  else
+    echo "running on a LTS node version, compiling and linting..."
+    npm run our:compile && npm run our:verify || exit -1
+    echo "...compiled and linted"
+  fi
+
+after_success: |
+  # Custom Deployment
+  # https://github.com/balupton/awesome-travis#npm-script-deployment
+  if ([ "$TRAVIS_BRANCH" == "$DEPLOY_BRANCH" ] &&
+      [ -z "$TRAVIS_TAG" ] &&
+      [ "$TRAVIS_PULL_REQUEST" == "false" ]); then
+    echo "deploying..."
+    npm run deploy || exit -1
+    echo "...deployed"
+  else
+    echo "skipped deploy"
+  fi
+
+
+# ========================================
 # Custom Configuration
+
 env:
   global:
-    # deployment environment variables
-    # travis encrypt "DEPLOY_USER=$GITHUB_USERNAME" --add env.global
-    # travis encrypt "DEPLOY_TOKEN=$GITHUB_TRAVIS_TOKEN" --add env.global
-    - DEPLOY_BRANCH='master'  # this is the branch name that you want tested and deployed, set correctly
-    - DEPLOY_NAME='Travis CI Deployer'  # this is the name that is used for the deployment commit, set to whatever
-    - DEPLOY_EMAIL='deployer@travis-ci.org'  # this is the email that is used for the deployment commit, set to whatever
-    - secure: AhG5pWLJKF0Ygo0Pxr61GjN2kqMpQuuB+z+Yiz7VY5FDnrJnnM2ezM0OrQq/JmoDQgfsoINrue7dSiNkLHLA+yKOBOCDBnTMxmaSgxZu9cVyPMhzK9wnpinnVwtgab73IqrbpSzWNqbZLrbqw/4eQ8aty5QIHd6vU5DBIGT0nrQ=
-    - secure: FR6/cp8mgxTpYMkx0TOlXHGSxK8sSa22lV2x/HIwvLuHZGTe9qNRNNOPzXR3SmZa1Qe2d+KSlwnZRI9Z5Y1t+CD4btL4eTd0rGUEWf07cD/Y+VrX8YFOK/sEHEP6ktLAs9Zqn1sBy4KDkpcryZmXc6GgvmsaxPCm5QM7rm7kzE0=
-    # application environment variables
-    # none
+  # Custom Deploy
+  # travis encrypt "SURGE_LOGIN=$SURGE_LOGIN" --add env.global
+  # travis encrypt "SURGE_TOKEN=$SURGE_TOKEN" --add env.global
+  - DEPLOY_BRANCH='master'  # this is the branch that you want deployed
+  - secure: Zrcl+LCeKVbwStqiITOqR+VGOTzzvdw1O+lfWLt62nc8HCvsvMdQISMu1XuQQyb8zcr5b1G7jCb7dz8Fd58/qOH5Et7H8lPCkMyCIEsAyB4fMyJUo5KUvgG7WGf41PzLQG1qDJfi7m56CfhUkXSlVxlGaApzrfw9m+GNHZb0lls=
+  - secure: Vu+TgBn6/QM9BZ3/9u775EV6VRESUG+zGorR5C+JNPClKkzWKwjPOEoBwdqOXuVtL2m398tYU1Z1/W1UPIXbjnLskPHvqrWbhs33NGGRzb3C3llPtNhY/Lh+Q6rbKFLCjjhh4I3bqNQ01pC1Tx5/JPqAW6xBPr29EBTmnx7GUSw=
+
+# https://github.com/balupton/awesome-travis#slack
+# https://github.com/balupton/awesome-travis#email
+notifications:
+  slack:
+    secure: DhJEwkGg347WIite3EeCOvw7QqehI2fEeDwrtS9ApzYuoLMB1pAl5ZgRi41Kg3H7UxKBLlaY6PAEFY2cp5FuDM+l61srKjO4llP3PrPADujyBweIzkXmvJlelJuJ5kUujh34eWCEkoLbQXHhJup1MHffi24Z9lJV5E+ArhtX7FQ=
+  email:
+    recipients:
+      secure: IcksCZA15d2Aq0SfSWRKDSbe9lJUSci5R60gJYE5kkNKpxfvd34lDiel869V/Xc/0CGlg+qBpaGJERDCnrDOoi+nKC1VAiby8DHJA0eucFpIC95/3iskV+DcnKiV2ulEs6RXzkYlIEwUPWb8o45l2fWaYzabfwPDLz+Q0qyJ+KI=
