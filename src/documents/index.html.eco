@@ -1,0 +1,11 @@
+<!---
+layout: page
+standalone: true
+title: "Welcome"
+--->
+
+<p>Welcome to the Bevry Learning Centre. Below you will find documentation about our various projects and initiatives.</p>
+
+<p>Bevry is an open company and community, you can learn more about us on our <a href="https://bevry.me">main website</a>.</p>
+
+<%- @renderMenu({render: "projects", useAnchors: true}) %>

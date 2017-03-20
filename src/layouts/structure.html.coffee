@@ -4,7 +4,7 @@ layout: default
 
 
 div '.container', ->
-	a '.main-website', href:'http://bevry.me', -> 'About Bevry'
+	a '.main-website', href:'https://bevry.me', -> 'About Bevry'
 
 	header '.topbar', ->
 		a href:'/', ->
@@ -15,21 +15,13 @@ div '.container', ->
 	div '.innerbar', ->
 
 		div '.mainbar', ->
-			div "#content", -> @content
+			div '.page', @content
+
 			footer ".bottombar", ->
 				div ".poweredby", @text['poweredby']
 				div ".copyright", @text['copyright']
 
-		if @document.category
-			div '.sidebar', ->
-				nav '.sidebar-nav.category-pages', ->
-					items = [].concat @getCategoryCollection(@document.project, @document.category).models
-					text @partial('list/items.html.coffee', false, {
-						items: items
-						partial: @partial
-						moment: @moment
-						showDescription: false
-						showDate: false
-						showContent: false
-						activeItem: @document
-					})
+		if @document.projectId and @document.categoryId
+			aside '.sidebar', ->
+				div '.sidebar-nav', ->
+					text @renderMenu({render: 'category'})

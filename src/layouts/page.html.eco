@@ -1,0 +1,5 @@
+<!---
+layout: structure
+--->
+
+<%- @renderBlock({cssClasses: ['page']}) %>

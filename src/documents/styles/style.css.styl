@@ -326,33 +326,29 @@ div.container
 	position: relative
 
 .innerbar
-	display: flex
-	flex-direction: row
-
-.topbar
-	flex: 1 1 auto
+	position: relative
 
 .mainbar
-	max-width: 1100px
-	flex: 1 1 auto
+	position: absolute
+	left: 0
+	top: 0
+	width: 78%
 
 .sidebar
-	width: 12em
-	max-width: 300px
-	flex: 1 0 auto
-	margin-left: 2%
+	position: absolute
+	right: 0
+	top: 0
+	width: 20%
+
 	opacity: 0.4
 	transition: opacity 0.5s ease-out
 	.sidebar-nav
-		width: 12em
 		position: fixed
-		padding: 0 1em /* top right bottom left */
 		transition: background 0.5s ease-out, box-shadow 0.5s ease-out, border 0.5s ease-out
 	&:hover
 		opacity: 1
 		.sidebar-nav
 			mixinBlock()
-
 
 .topbar
 	position: relative
@@ -379,7 +375,7 @@ div.container
 	li
 		margin: 0 0 0.5em
 	li.active
-		> a
+		> .list-menu-title
 			color: colorActive
 	a
 		text-decoration: none
@@ -449,29 +445,28 @@ div.container
 			nav,nav li
 				list-style: none
 
-			.reference
+			.list-menu
 				padding-top: 1em
 				h3
 					margin: 1em 0
 				h4
 					margin: 1.5em 0
-				.project
+				.list-menu-project
 					clear: both
 					margin-bottom: 4em
-				.categories
+					padding: 3em 3em 2em
+				.list-menu-categories
 					wrapper(100%)
-					.category
+					.list-menu-category
 						column(4)
-					&.columns-3 .category
+					&.columns-3 .list-menu-category
 						column(3)
-					&.columns-2 .category
+					&.columns-2 .list-menu-category
 						column(2)
-					&.columns-1 .category
+					&.columns-1 .list-menu-category
 						column(1)
 				h2
 					margin-top: 0
-				.subblock
-					padding: 3em 3em 2em
 
 		.block-footer
 			.comments
@@ -579,6 +574,7 @@ div.container
 		h4
 			margin-top: 2.5em
 
+	.list-menu-project
 	.subblock
 		mixinSubblock()
 		border-radius: 8px
@@ -714,11 +710,12 @@ div.container
 		.block
 			border-radius: 0
 			.block-content
-				.reference
-					.categories
-						.category
+				.list-menu
+					.list-menu-categories
+						.list-menu-category
 							column(2)
 
+		.list-menu-project
 		.subblock
 			.main
 				.heading
@@ -745,11 +742,12 @@ div.container
 			text-align: justify
 			text-justify: newspaper
 			.block-content
-				.reference
-					.categories
-						.category
+				.list-menu
+					.list-menu-categories
+						.list-menu
 							column(1)
 
+		.list-menu-project
 		.subblock
 			.avatar
 				display: none
