@@ -198,11 +198,13 @@ helpers({
 	docpadConfig
 })
 
+/*
 // Don't use debug log level on travis as it outputs too much and travis complains
 // https://travis-ci.org/docpad/website/builds/104133494
 if (process.env.TRAVIS) {
 	docpadConfig.logLevel = 6
 }
+*/
 
 // Export our DocPad Configuration
 module.exports = docpadConfig
