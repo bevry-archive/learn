@@ -114,7 +114,7 @@ const docpadConfig = {
 			repos: [
 				{
 					name: 'Bevry Documentation',
-					path: 'src/documents/learn/bevry',
+					path: 'src/documents/learn/bevry-documentation',
 					url: 'https://github.com/bevry/documentation.git'
 				}
 			]
@@ -189,6 +189,7 @@ helpers({
 		},
 		projects: {
 			node: {
+				editUrl: 'https://github.com/bevry/documentation/edit/master/node/',
 				title: 'Node.js',
 				categories: {
 					handsonnode: {
