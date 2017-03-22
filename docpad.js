@@ -148,7 +148,8 @@ const docpadConfig = {
 				'/community/coding-standards': 'https://github.com/bevry/base/blob/master/CODING-STANDARDS.md',
 				'/community/support-channels': 'https://discuss.bevry.me/t/official-bevry-support-channels/63',
 				'/community/support-guidelines': 'https://discuss.bevry.me/t/official-support-guidelines/140',
-				'/community/documentation-guidelines': 'https://discuss.bevry.me/t/official-documentation-guidelines/139'
+				'/community/documentation-guidelines': 'https://discuss.bevry.me/t/official-documentation-guidelines/139',
+				'/community/contribute': 'https://discuss.bevry.me/t/official-contribution-guide/141'
 			},
 
 			advancedRedirects: [
