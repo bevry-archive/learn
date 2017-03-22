@@ -86,7 +86,7 @@
     "our:test": "npm run our:verify && npm test",
     "our:release": "npm run deploy",
     "start": "docpad-server",
-    "test": "docpad generate --debug --silent --env static",
+    "test": "docpad generate --silent --env static",
     "info": "docpad info --silent",
     "deploy": "surge --project ./out --domain https://learn.bevry.me"
   }
