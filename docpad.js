@@ -141,7 +141,7 @@ const docpadConfig = {
 				'/taskgroup/guide': 'https://github.com/bevry/taskgroup/wiki/Introduction-&-Usage',
 				'/taskgroup/comparisons': 'https://github.com/bevry/taskgroup/wiki/Compare',
 				'/taskgroup/showcase': 'https://github.com/bevry/taskgroup/wiki/Showcase',
-				'/taskgroup/api': 'http://rawgit.com/bevry/taskgroup/master/docs/',
+				'/taskgroup/api': 'http://master.taskgroup.bevry.surge.sh/docs/',
 				'/joe/guide': 'https://github.com/bevry/joe/wiki/Introduction-&-Usage',
 				'/queryengine/guide': 'https://github.com/bevry/query-engine/wiki/Using',
 				'/community/chat-guidelines': 'https://discuss.bevry.me/t/irc-chat-rooms/54',
